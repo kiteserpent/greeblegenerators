@@ -10,22 +10,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
+import com.quarrel.glasspole.EnergyStoragePlus;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jetbrains.annotations.NotNull;
+
 
 public class StaticGlassGenBlockEntity extends BlockEntity implements BlockEntityTicker<StaticGlassGenBlockEntity> {
 
 	private static final int POWERGEN_CAPACITY = 10;
     private static final int POWERGEN_RECEIVE = 0;
     private static final int POWERGEN_SEND = 1;
-    private static final int POWERGEN_INITIAL_POWER = 0;
 
-    private final EnergyStorage energyStorage =
-    		new EnergyStorage(POWERGEN_CAPACITY, POWERGEN_RECEIVE, POWERGEN_SEND, POWERGEN_INITIAL_POWER);
+    private final EnergyStoragePlus energyStorage =
+    		new EnergyStoragePlus(POWERGEN_CAPACITY, POWERGEN_RECEIVE, POWERGEN_SEND);
     private final LazyOptional<IEnergyStorage> energyLazy = LazyOptional.of(() -> energyStorage);
 
 
@@ -81,9 +81,10 @@ public class StaticGlassGenBlockEntity extends BlockEntity implements BlockEntit
                     continue;
                 }
                 be.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
-                    if (be != this && otherStorage.getEnergyStored() < otherStorage.getMaxEnergyStored()) {
-                        int toSend = energyStorage.extractEnergy(POWERGEN_SEND, false);
-                        int received = otherStorage.receiveEnergy(toSend, false);
+                    if (be != this && otherStorage.canReceive()) {
+                        int canSend = energyStorage.extractEnergy(POWERGEN_SEND, true);
+                        int didSend = otherStorage.receiveEnergy(canSend, false);
+                        energyStorage.extractEnergy(didSend, false);
                         setChanged();
                     }
                 });
@@ -114,8 +115,7 @@ public class StaticGlassGenBlockEntity extends BlockEntity implements BlockEntit
     }
 
 	public void rub() {
-		if (energyStorage.receiveEnergy(1, true) > 0) {
-			energyStorage.energy++;
+		if (energyStorage.createEnergy(1) > 0) {
 			setChanged();
 		}
 	}
