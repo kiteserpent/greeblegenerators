@@ -59,7 +59,9 @@ public class GlassPole
     private void clientSetup(final FMLClientSetupEvent event)
     {
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.STATIC_GLASS_GEN_BLOCK.get(),
-        									RenderType.cutout());
+        		RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.GREEBLE_CAGE_BLOCK.get(),
+				RenderType.cutout());
     }
 
 }

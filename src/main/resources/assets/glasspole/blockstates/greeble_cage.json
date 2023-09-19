@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"full=false": {
+		  "model": "glasspole:block/greeble_cage_empty"
+		},
+		"full=true": {
+		  "model": "glasspole:block/caged_greeble"
+		}
+	  }
+}

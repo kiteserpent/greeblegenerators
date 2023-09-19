@@ -1,0 +1,34 @@
+{
+	"credit": "Made with Blockbench",
+	"greeble_cages": {
+		"0": "block/greeble_cage",
+		"particle": "block/greeble_cage"
+	},
+	"elements": [
+		{
+			"name": "cage",
+			"from": [4, 0, 4],
+			"to": [12, 6, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"east": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"south": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"west": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"up": {"uv": [7, 0, 16, 9], "greeble_cage": "#0"}
+			}
+		},
+		{
+			"name": "cageinternal",
+			"from": [12, 6, 12],
+			"to": [4, 0, 4],
+			"faces": {
+				"north": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"east": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"south": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"west": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"up": {"uv": [7, 0, 16, 9], "greeble_cage": "#0"}
+			}
+		}
+	],
+	"display": {}
+}

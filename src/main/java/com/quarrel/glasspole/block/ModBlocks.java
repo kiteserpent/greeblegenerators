@@ -40,9 +40,11 @@ public class ModBlocks {
                 new Item.Properties().tab(tab)));
     }
     
-    
+
     public static final RegistryObject<StaticGlassGenBlock> STATIC_GLASS_GEN_BLOCK = registerBlock("static_glass_generator",
             () -> new StaticGlassGenBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.0f).sound(SoundType.GLASS).noOcclusion()), CreativeModeTab.TAB_MISC);
+    public static final RegistryObject<GreebleCageBlock> GREEBLE_CAGE_BLOCK = registerBlock("greeble_cage",
+            () -> new GreebleCageBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion()), CreativeModeTab.TAB_MISC);
 
     
 }

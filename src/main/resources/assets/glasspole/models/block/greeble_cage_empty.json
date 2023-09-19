@@ -1,0 +1,49 @@
+{
+	"credit": "Made with Blockbench",
+	"greeble_cages": {
+		"0": "block/greeble_cage",
+		"particle": "block/greeble_cage"
+	},
+	"elements": [
+		{
+			"name": "cage",
+			"from": [4, 0, 4],
+			"to": [12, 6, 12],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [4, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"east": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"south": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"west": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"up": {"uv": [7, 0, 16, 9], "greeble_cage": "#0"}
+			}
+		},
+		{
+			"name": "cageinternal",
+			"from": [12, 6, 12],
+			"to": [4, 0, 4],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [4, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"east": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"south": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"west": {"uv": [0, 0, 7, 5], "greeble_cage": "#0"},
+				"up": {"uv": [7, 0, 16, 9], "greeble_cage": "#0"}
+			}
+		},
+		{
+			"name": "stick",
+			"from": [11, 0, 7.5],
+			"to": [12, 3, 8.5],
+			"faces": {
+				"north": {"uv": [0, 13, 1, 16], "greeble_cage": "#0"},
+				"east": {"uv": [0, 13, 1, 16], "greeble_cage": "#0"},
+				"south": {"uv": [0, 13, 1, 16], "greeble_cage": "#0"},
+				"west": {"uv": [0, 13, 1, 16], "greeble_cage": "#0"},
+				"up": {"uv": [1, 13, 2, 14], "greeble_cage": "#0"},
+				"down": {"uv": [1, 13, 2, 14], "greeble_cage": "#0"}
+			}
+		}
+	],
+	"display": {}
+}
