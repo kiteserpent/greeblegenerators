@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "bbb",
-    "/w/",
+    "/G/",
     "SSS"
   ],
   "key": {
@@ -12,8 +12,8 @@
     "/": {
       "item": "minecraft:lightning_rod"
     },
-    "w": {
-      "item": "minecraft:wheat"
+    "G": {
+      "item": "glasspole:caged_greeble"
     },
     "S": {
       "item": "minecraft:stone_slab"

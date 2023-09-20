@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.quarrel.glasspole.EnergyStoragePlus;
-import com.quarrel.glasspole.GreebleGeneratorMenu;
+import com.quarrel.glasspole.menu.GreebleGeneratorMenu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,10 +35,9 @@ public class GreebleGeneratorBlockEntity extends BlockEntity implements BlockEnt
 	private static final int POWERGEN_CAPACITY = 10000;
     private static final int POWERGEN_RECEIVE = 0;
     private static final int POWERGEN_SEND = 100;
-    private static final int GREEBLE_SLOT = 0;
-    private static final int FOOD_SLOT = 1;
+    private static final int FOOD_SLOT = 0;
     
-    private final ItemStackHandler itemHandler = new ItemStackHandler(2) {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
     	@Override
     	protected void onContentsChanged(int slot) {
     		setChanged();
