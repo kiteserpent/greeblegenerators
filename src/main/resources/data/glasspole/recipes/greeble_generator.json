@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "/w/",
+    "SSS"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:iron_bars"
+    },
+    "/": {
+      "item": "minecraft:lightning_rod"
+    },
+    "w": {
+      "item": "minecraft:wheat"
+    },
+    "S": {
+      "item": "minecraft:stone_slab"
+    }
+  },
+  "result": {
+    "item": "glasspole:greeble_generator"
+  }
+}

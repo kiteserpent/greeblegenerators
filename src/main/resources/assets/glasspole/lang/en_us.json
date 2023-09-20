@@ -2,7 +2,9 @@
 	"item.glasspole.static_glass_generator": "Static Generator",
 	"item.glasspole.greeble_cage": "Greeble Cage",
 	"item.glasspole.caged_greeble": "Caged Greeble",
-
+	"item.glasspole.greeble_generator": "Greeble Generator",
+	
 	"block.glasspole.static_glass_generator": "Static Generator",
-	"block.glasspole.greeble_cage": "Greeble Cage"
+	"block.glasspole.greeble_cage": "Greeble Cage",
+	"block.glasspole.greeble_generator": "Greeble Generator"
 }

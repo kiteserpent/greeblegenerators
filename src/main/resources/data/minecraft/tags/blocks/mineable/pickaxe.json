@@ -1,5 +1,7 @@
 {
   "replace": false,
   "values": [
-    "glasspole:static_glass_generator"  ]
+    "glasspole:static_glass_generator",
+	"glasspole:greeble_generator",
+  ]
 }

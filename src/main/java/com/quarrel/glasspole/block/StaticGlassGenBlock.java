@@ -2,7 +2,6 @@ package com.quarrel.glasspole.block;
 
 import javax.annotation.Nullable;
 
-import com.quarrel.glasspole.block.entity.ModBlockEntities;
 import com.quarrel.glasspole.block.entity.StaticGlassGenBlockEntity;
 
 import net.minecraft.core.BlockPos;
@@ -48,7 +47,6 @@ public class StaticGlassGenBlock extends BaseEntityBlock {
     }
 
     /* BLOCK ENTITY */
-
 
     @SuppressWarnings("deprecation")
     @Override

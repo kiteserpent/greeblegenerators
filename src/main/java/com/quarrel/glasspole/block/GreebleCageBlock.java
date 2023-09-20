@@ -1,13 +1,17 @@
 package com.quarrel.glasspole.block;
 
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -17,7 +21,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class GreebleCageBlock extends Block {
 	
  	public static final BooleanProperty FULL = BooleanProperty.create("full");
-//	public static final BooleanProperty FULL = GreebleCageBlock.FULL;
 	
     public GreebleCageBlock(Properties properties) {
         super(properties);
@@ -34,16 +37,19 @@ public class GreebleCageBlock extends Block {
 		pBuilder.add(FULL);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRandom) {
 		if (!pLevel.isClientSide()) {
-			// pLevel.setBlock(pBlockPos, pState.setValue(FULL, Boolean.valueOf(true)), UPDATE_ALL);
+			if (!pLevel.hasNearbyAlivePlayer((double)pBlockPos.getX() + 0.5, (double)pBlockPos.getY() + 0.5, (double)pBlockPos.getZ() + 0.5, 24.0)) {
+				pLevel.setBlock(pBlockPos, pState.setValue(FULL, Boolean.valueOf(true)), UPDATE_ALL);
+			}
 		}
-		// super.randomTick(pState, pLevel, pBlockPos, pRandom);
+		super.tick(pState, pLevel, pBlockPos, pRandom);
 	}
 
     
-    private static final VoxelShape SHAPE = Block.box(2, 0, 4, 14, 8, 12);
+    private static final VoxelShape SHAPE = Block.box(2, 0, 4, 13, 8, 12);
 
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {

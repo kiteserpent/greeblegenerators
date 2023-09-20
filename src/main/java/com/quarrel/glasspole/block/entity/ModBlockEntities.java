@@ -13,12 +13,17 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, GlassPole.MODID);
 
+    
     public static final RegistryObject<BlockEntityType<StaticGlassGenBlockEntity>> STATIC_GLASS_GEN_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("static_glass_gen_block_entity",
             		() -> BlockEntityType.Builder.of(StaticGlassGenBlockEntity::new,
                             ModBlocks.STATIC_GLASS_GEN_BLOCK.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GreebleGeneratorBlockEntity>> GREEBLE_GEN_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("greeble_generator_block_entity",
+            		() -> BlockEntityType.Builder.of(GreebleGeneratorBlockEntity::new,
+                            ModBlocks.GREEBLE_GEN_BLOCK.get()).build(null));
 
-
+    
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }
