@@ -18,7 +18,6 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 
 import com.quarrel.glasspole.block.entity.GreebleGenBlockEntity;
-import com.quarrel.glasspole.block.entity.ModBlockEntities;
 
 public class GreebleGenBlock extends BaseEntityBlock {
 
@@ -78,21 +77,6 @@ public class GreebleGenBlock extends BaseEntityBlock {
                 be.tick(lvl, pos, blockState, be);
             }
         };
-//        return createTickerHelper(pBlockEntityType, ModBlockEntities.GREEBLE_GEN_BLOCK_ENTITY.get(),
-//                GreebleGenBlockEntity::tick);
     }
-
-    /*
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (!pLevel.isClientSide()) {
-            return (lvl, pos, stt, te) -> {
-                if (te instanceof GreebleGenBlockEntity generator) generator.tick();
-            };
-        }
-        return null;
-    }
-    */
 
 }

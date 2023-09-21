@@ -24,10 +24,17 @@ public class EnergyStoragePlus extends EnergyStorage {
     	super(capacity, maxReceive, maxExtract, energy);
     }
 
-    public int createEnergy(int newEnergy)
+    public int createEnergy(int toAdd)
     {
-    	int amountToAdd = Math.max(0,  Math.min(newEnergy, this.capacity-this.energy));
-    	this.energy += amountToAdd;
-    	return amountToAdd;
+    	int clampedToAdd = Math.max(0, Math.min(toAdd, this.capacity-this.energy));
+    	this.energy += clampedToAdd;
+    	return clampedToAdd;
+    }
+
+    public int setEnergy(int newAmount)
+    {
+    	int clampedNewAmount = Math.max(0, Math.min(newAmount, this.capacity));
+    	this.energy = clampedNewAmount;
+    	return clampedNewAmount;
     }
 }

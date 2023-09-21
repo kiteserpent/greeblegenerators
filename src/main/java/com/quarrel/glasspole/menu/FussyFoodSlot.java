@@ -11,6 +11,7 @@ public class FussyFoodSlot extends SlotItemHandler {
 		super(itemHandler, index, xPosition, yPosition);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean mayPlace(ItemStack stack) {
         FoodProperties food = stack.getItem().getFoodProperties();

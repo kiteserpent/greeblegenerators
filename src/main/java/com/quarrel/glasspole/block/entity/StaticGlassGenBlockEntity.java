@@ -15,8 +15,6 @@ import com.quarrel.glasspole.EnergyStoragePlus;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jetbrains.annotations.NotNull;
-
 
 public class StaticGlassGenBlockEntity extends BlockEntity implements BlockEntityTicker<StaticGlassGenBlockEntity> {
 

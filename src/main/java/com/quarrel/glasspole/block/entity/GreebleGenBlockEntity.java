@@ -40,10 +40,11 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
     private static final int POWERGEN_MAXGEN = 50;
     private static final int POWERGEN_SEND = 2 * POWERGEN_MAXGEN;
     private static final int FOOD_SLOT = 0;
-    private static final int FOODSPAN = 15;
+    private static final int FOODSPAN = 100;
+    private static final int EATSPAN = 10;
     private int tickCount = 0;
-    private int nutLevel = 0;
-    private float satLevel = 0.0f;
+    public int nutLevel = 0;
+    public float satLevel = 0.0f;
     
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
     	@Override
@@ -98,15 +99,22 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
     }
 
     @Override
-    protected void saveAdditional(@Nonnull CompoundTag tag) {
-        tag.put("inventory", itemHandler.serializeNBT());
-        super.saveAdditional(tag);
+    protected void saveAdditional(@Nonnull CompoundTag nbt) {
+        nbt.put("inventory", itemHandler.serializeNBT());
+        nbt.put("energy", energyStorage.serializeNBT());
+        CompoundTag infoTag = new CompoundTag();
+        infoTag.putInt("nutrition", nutLevel);
+        infoTag.putFloat("saturation", satLevel);
+        nbt.put("Info", infoTag);
     }
 
     @Override
     public void load(CompoundTag nbt) {
-        super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
+        energyStorage.deserializeNBT(nbt.get("energy"));
+        nutLevel = nbt.getCompound("Info").getInt("nutrition");
+        satLevel = nbt.getCompound("Info").getFloat("saturation");
+        super.load(nbt);
     }
 
     public void drops() {
@@ -117,15 +125,12 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
+	@SuppressWarnings("deprecation")
 	public void tickk() {
 		tickCount++;
-		int toAdd = Math.min(nutLevel, (int)(satLevel + 0.5f)) * POWERGEN_MAXGEN / 100;
-		if (energyStorage.createEnergy(toAdd) > 0)
-			setChanged();
-		if (tickCount >= FOODSPAN) {
-			tickCount -= FOODSPAN;
-			if (nutLevel >= 1)		--nutLevel;
-			if (satLevel >= 1.0f)	satLevel -= 1.0f;
+		energyStorage.createEnergy(Math.min(nutLevel, (int)(satLevel + 0.5f)) * POWERGEN_MAXGEN / 100);
+		sendOutPower();
+		if (tickCount % EATSPAN == 0) {
 			ItemStack food = itemHandler.getStackInSlot(FOOD_SLOT);
 			FoodProperties foodProps = food.getItem().getFoodProperties();
 	        if (food != null & foodProps != null) {
@@ -138,6 +143,12 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
 					setChanged();
 		        }
 	        }
+		}
+		if (tickCount >= FOODSPAN) {
+			tickCount -= FOODSPAN;
+			if (nutLevel >= 1)		--nutLevel;
+			if (satLevel >= 1.0f)	satLevel -= 1.0f;
+			setChanged();
 		}
 	}
 

@@ -27,7 +27,12 @@ public class GreebleGenScreen extends AbstractContainerScreen<GreebleGenMenu> {
         int y = (height - imageHeight) / 2;
         this.blit(pPoseStack, x, y, 0, 0, imageWidth, imageHeight);
         
-        int nutBarHeight = menu.
+        int nutBarHeight = (menu.getNutrition() + 1) / 2;
+        this.blit(pPoseStack, x+72, y+70-nutBarHeight, 177, 70-nutBarHeight, 12, nutBarHeight);
+        int satBarHeight = (menu.getSaturation() + 1) / 2;
+        this.blit(pPoseStack, x+92, y+70-satBarHeight, 190, 70-satBarHeight, 12, satBarHeight);
+        int energyBarHeight = menu.getEnergy() * 50 / 20000;	// magic numbers bad!
+        this.blit(pPoseStack, x+145, y+70-energyBarHeight, 203, 70-energyBarHeight, 12, energyBarHeight);
     }
 
     @Override

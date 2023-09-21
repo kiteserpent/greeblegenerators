@@ -1,5 +1,6 @@
 package com.quarrel.glasspole.menu;
 
+import com.quarrel.glasspole.EnergyStoragePlus;
 import com.quarrel.glasspole.block.ModBlocks;
 import com.quarrel.glasspole.block.entity.GreebleGenBlockEntity;
 
@@ -8,13 +9,14 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class GreebleGenMenu extends AbstractContainerMenu {
 
@@ -35,8 +37,51 @@ public class GreebleGenMenu extends AbstractContainerMenu {
 		});
 		addPlayerInventory(inv);
 		addPlayerHotbar(inv);
+		addDataSlot(new DataSlot() {		// nutrition bar data
+			@Override
+			public int get() {
+				return getNutrition();
+			}
+			@Override
+			public void set(int val) {
+				ggbe.nutLevel = val;
+			}
+		});
+		addDataSlot(new DataSlot() {		// saturation bar data
+			@Override
+			public int get() {
+				return getSaturation();
+			}
+			@Override
+			public void set(int val) {
+				ggbe.satLevel = (float)val;
+			}
+		});
+		addDataSlot(new DataSlot() {		// stored energy
+			@Override
+			public int get() {
+		        return getEnergy();
+		    }
+			@Override
+			public void set(int val) {
+                ggbe.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
+                    ((EnergyStoragePlus)h).setEnergy(val);
+                });
+			}
+		});
 	}
 
+    public int getNutrition() {
+    	return ggbe.nutLevel;
+    }
+
+    public int getSaturation() {
+    	return (int)(ggbe.satLevel + 0.5f);
+    }
+
+    public int getEnergy() {
+        return ggbe.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    }
 	
     @Override
     public boolean stillValid(Player pPlayer) {
