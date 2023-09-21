@@ -10,11 +10,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class GreebleGeneratorScreen extends AbstractContainerScreen<GreebleGeneratorMenu> {
+public class GreebleGenScreen extends AbstractContainerScreen<GreebleGenMenu> {
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(GlassPole.MODID, "textures/gui/greeblegengui.png");
 
-    public GreebleGeneratorScreen(GreebleGeneratorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+    public GreebleGenScreen(GreebleGenMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
 
@@ -25,8 +25,9 @@ public class GreebleGeneratorScreen extends AbstractContainerScreen<GreebleGener
         RenderSystem.setShaderTexture(0, TEXTURE);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-
         this.blit(pPoseStack, x, y, 0, 0, imageWidth, imageHeight);
+        
+        int nutBarHeight = menu.
     }
 
     @Override

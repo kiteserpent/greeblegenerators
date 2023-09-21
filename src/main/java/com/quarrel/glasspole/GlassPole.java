@@ -4,7 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.quarrel.glasspole.block.ModBlocks;
 import com.quarrel.glasspole.block.entity.ModBlockEntities;
 import com.quarrel.glasspole.item.ModItems;
-import com.quarrel.glasspole.menu.GreebleGeneratorScreen;
+import com.quarrel.glasspole.menu.GreebleGenScreen;
 import com.quarrel.glasspole.menu.ModMenuTypes;
 
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -59,7 +59,7 @@ public class GlassPole
         		RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.GREEBLE_CAGE_BLOCK.get(),
 				RenderType.cutout());
-        MenuScreens.register(ModMenuTypes.GREEBLE_GENERATOR_MENU.get(), GreebleGeneratorScreen::new);
+        MenuScreens.register(ModMenuTypes.GREEBLE_GENERATOR_MENU.get(), GreebleGenScreen::new);
         }
 
 }

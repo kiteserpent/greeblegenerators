@@ -16,8 +16,8 @@ public class ModMenuTypes {
 	public static final DeferredRegister<MenuType<?>> MENUS =
 		DeferredRegister.create(ForgeRegistries.CONTAINERS, GlassPole.MODID);
 
-	public static final RegistryObject<MenuType<GreebleGeneratorMenu>> GREEBLE_GENERATOR_MENU =
-		registerMenuType(GreebleGeneratorMenu::new, "greeble_generator_menu");
+	public static final RegistryObject<MenuType<GreebleGenMenu>> GREEBLE_GENERATOR_MENU =
+		registerMenuType(GreebleGenMenu::new, "greeble_generator_menu");
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory, String name) {
     	return MENUS.register(name, () -> IForgeMenuType.create(factory));

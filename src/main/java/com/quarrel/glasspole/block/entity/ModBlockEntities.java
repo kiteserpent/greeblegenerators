@@ -18,9 +18,9 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("static_glass_gen_block_entity",
             		() -> BlockEntityType.Builder.of(StaticGlassGenBlockEntity::new,
                             ModBlocks.STATIC_GLASS_GEN_BLOCK.get()).build(null));
-    public static final RegistryObject<BlockEntityType<GreebleGeneratorBlockEntity>> GREEBLE_GEN_BLOCK_ENTITY =
+    public static final RegistryObject<BlockEntityType<GreebleGenBlockEntity>> GREEBLE_GEN_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("greeble_generator_block_entity",
-            		() -> BlockEntityType.Builder.of(GreebleGeneratorBlockEntity::new,
+            		() -> BlockEntityType.Builder.of(GreebleGenBlockEntity::new,
                             ModBlocks.GREEBLE_GEN_BLOCK.get()).build(null));
 
     

@@ -1,7 +1,7 @@
 package com.quarrel.glasspole.menu;
 
 import com.quarrel.glasspole.block.ModBlocks;
-import com.quarrel.glasspole.block.entity.GreebleGeneratorBlockEntity;
+import com.quarrel.glasspole.block.entity.GreebleGenBlockEntity;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,19 +16,19 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class GreebleGeneratorMenu extends AbstractContainerMenu {
+public class GreebleGenMenu extends AbstractContainerMenu {
 
-	private final GreebleGeneratorBlockEntity ggbe;
+	private final GreebleGenBlockEntity ggbe;
 	private final Level level;
 	
-	public GreebleGeneratorMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+	public GreebleGenMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
 		this(pContainerId, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()));
 	}
 
-	public GreebleGeneratorMenu(int pContainerId, Inventory inv, BlockEntity be) {
+	public GreebleGenMenu(int pContainerId, Inventory inv, BlockEntity be) {
 		super(ModMenuTypes.GREEBLE_GENERATOR_MENU.get(), pContainerId);
 		checkContainerSize(inv, 1);
-		this.ggbe = (GreebleGeneratorBlockEntity)be;
+		this.ggbe = (GreebleGenBlockEntity)be;
 		this.level = inv.player.level;
 		this.ggbe.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
 			addSlot(new FussyFoodSlot(handler, 0, 30, 35));

@@ -17,11 +17,12 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-import com.quarrel.glasspole.block.entity.GreebleGeneratorBlockEntity;
+import com.quarrel.glasspole.block.entity.GreebleGenBlockEntity;
+import com.quarrel.glasspole.block.entity.ModBlockEntities;
 
-public class GreebleGeneratorBlock extends BaseEntityBlock {
+public class GreebleGenBlock extends BaseEntityBlock {
 
-    public GreebleGeneratorBlock(Properties properties) {
+    public GreebleGenBlock(Properties properties) {
         super(properties);
     }
 
@@ -37,8 +38,8 @@ public class GreebleGeneratorBlock extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
     	if (pState.getBlock() != pNewState.getBlock()) {
     	    BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-    	    if (blockEntity instanceof GreebleGeneratorBlockEntity) {
-    	        ((GreebleGeneratorBlockEntity) blockEntity).drops();
+    	    if (blockEntity instanceof GreebleGenBlockEntity) {
+    	        ((GreebleGenBlockEntity) blockEntity).drops();
     	    }
     	}
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
@@ -49,8 +50,8 @@ public class GreebleGeneratorBlock extends BaseEntityBlock {
                                  Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if (entity instanceof GreebleGeneratorBlockEntity) {
-                NetworkHooks.openGui(((ServerPlayer)pPlayer), (GreebleGeneratorBlockEntity)entity, pPos);
+            if (entity instanceof GreebleGenBlockEntity) {
+                NetworkHooks.openGui(((ServerPlayer)pPlayer), (GreebleGenBlockEntity)entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing for Greeble Generator!");
             }
@@ -63,18 +64,35 @@ public class GreebleGeneratorBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new GreebleGeneratorBlockEntity(pPos, pState);
+        return new GreebleGenBlockEntity(pPos, pState);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        if (pLevel.isClientSide()) {
+            return null;
+        }
+        return (lvl, pos, blockState, t) -> {
+            if (t instanceof GreebleGenBlockEntity be) {
+                be.tick(lvl, pos, blockState, be);
+            }
+        };
+//        return createTickerHelper(pBlockEntityType, ModBlockEntities.GREEBLE_GEN_BLOCK_ENTITY.get(),
+//                GreebleGenBlockEntity::tick);
+    }
+
+    /*
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         if (!pLevel.isClientSide()) {
             return (lvl, pos, stt, te) -> {
-                if (te instanceof GreebleGeneratorBlockEntity generator) generator.tick();
+                if (te instanceof GreebleGenBlockEntity generator) generator.tick();
             };
         }
         return null;
     }
+    */
 
 }
