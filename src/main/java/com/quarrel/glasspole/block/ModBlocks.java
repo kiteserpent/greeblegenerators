@@ -51,7 +51,7 @@ public class ModBlocks {
             () -> new GreebleGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f)), CreativeModeTab.TAB_MISC);
 
     public static final RegistryObject<SparkChamberGenBlock> SPARK_CHAMBER_GEN_BLOCK = registerBlock("spark_chamber_generator",
-            () -> new SparkChamberGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).randomTicks()), CreativeModeTab.TAB_MISC);
+            () -> new SparkChamberGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(1.0f).randomTicks().sound(SoundType.GLASS).noOcclusion()), CreativeModeTab.TAB_MISC);
 
     
 }
