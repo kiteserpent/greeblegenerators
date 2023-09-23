@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iXi",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "X": {
+      "item": "glasspole:excitation_frame"
+    }
+  },
+  "result": {
+    "item": "glasspole:spark_chamber_generator"
+  }
+}

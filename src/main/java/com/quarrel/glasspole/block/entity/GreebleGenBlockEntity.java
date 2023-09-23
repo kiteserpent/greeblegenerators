@@ -55,9 +55,9 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
     
     private LazyOptional<IItemHandler> itemsLazy = LazyOptional.empty();
     
-    private final EnergyStoragePlus energyStorage =
+    private EnergyStoragePlus energyStorage =
     		new EnergyStoragePlus(POWERGEN_CAPACITY, POWERGEN_RECEIVE, POWERGEN_SEND);
-    private final LazyOptional<IEnergyStorage> energyLazy = LazyOptional.of(() -> energyStorage);
+    private LazyOptional<IEnergyStorage> energyLazy = LazyOptional.of(() -> energyStorage);
 
     public GreebleGenBlockEntity(BlockPos pPos, BlockState pState) {
 		super(ModBlockEntities.GREEBLE_GEN_BLOCK_ENTITY.get(), pPos, pState);
@@ -90,12 +90,14 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
     public void onLoad() {
         super.onLoad();
         itemsLazy = LazyOptional.of(() -> itemHandler);
+        energyLazy = LazyOptional.of(() -> energyStorage);
     }
 
     @Override
     public void invalidateCaps()  {
         super.invalidateCaps();
         itemsLazy.invalidate();
+        energyLazy.invalidate();
     }
 
     @Override
@@ -146,8 +148,8 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
 		}
 		if (tickCount >= FOODSPAN) {
 			tickCount -= FOODSPAN;
-			if (nutLevel >= 1)		--nutLevel;
-			if (satLevel >= 1.0f)	satLevel -= 1.0f;
+			if (nutLevel > 0)		--nutLevel;
+			if (satLevel > 0.0f)	satLevel = Math.max(satLevel - 1.0f, 0.0f);
 			setChanged();
 		}
 	}

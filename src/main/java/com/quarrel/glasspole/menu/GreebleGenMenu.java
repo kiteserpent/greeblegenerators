@@ -50,11 +50,11 @@ public class GreebleGenMenu extends AbstractContainerMenu {
 		addDataSlot(new DataSlot() {		// saturation bar data
 			@Override
 			public int get() {
-				return getSaturation();
+				return getDecimalSaturation();	// this kludge works?
 			}
 			@Override
 			public void set(int val) {
-				ggbe.satLevel = (float)val;
+				ggbe.satLevel = (float)val / 10.0f;
 			}
 		});
 		addDataSlot(new DataSlot() {		// stored energy
@@ -77,6 +77,14 @@ public class GreebleGenMenu extends AbstractContainerMenu {
 
     public int getSaturation() {
     	return (int)(ggbe.satLevel + 0.5f);
+    }
+
+    public int getDecimalSaturation() {
+    	return (int)(ggbe.satLevel * 10.0f + 0.5f);
+    }
+
+    public float getSaturationFloat() {
+    	return ggbe.satLevel;
     }
 
     public int getEnergy() {

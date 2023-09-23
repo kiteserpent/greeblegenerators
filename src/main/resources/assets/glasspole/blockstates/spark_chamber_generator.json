@@ -1,0 +1,5 @@
+{
+	"variants": {
+		"": { "model": "glasspole:block/spark_chamber_generator" }
+	}
+}

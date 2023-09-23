@@ -43,10 +43,15 @@ public class ModBlocks {
 
     public static final RegistryObject<StaticGlassGenBlock> STATIC_GLASS_GEN_BLOCK = registerBlock("static_glass_generator",
             () -> new StaticGlassGenBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.0f).sound(SoundType.GLASS).noOcclusion()), CreativeModeTab.TAB_MISC);
+
     public static final RegistryObject<GreebleCageBlock> GREEBLE_CAGE_BLOCK = registerBlock("greeble_cage",
             () -> new GreebleCageBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().randomTicks()), CreativeModeTab.TAB_MISC);
+
     public static final RegistryObject<GreebleGenBlock> GREEBLE_GEN_BLOCK = registerBlock("greeble_generator",
             () -> new GreebleGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f)), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<SparkChamberGenBlock> SPARK_CHAMBER_GEN_BLOCK = registerBlock("spark_chamber_generator",
+            () -> new SparkChamberGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f).randomTicks()), CreativeModeTab.TAB_MISC);
 
     
 }

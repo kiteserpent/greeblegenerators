@@ -22,6 +22,10 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("greeble_generator_block_entity",
             		() -> BlockEntityType.Builder.of(GreebleGenBlockEntity::new,
                             ModBlocks.GREEBLE_GEN_BLOCK.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SparkChamberGenBlockEntity>> SPARK_CHAMBER_GEN_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("spark_chamber_generator_block_entity",
+            		() -> BlockEntityType.Builder.of(SparkChamberGenBlockEntity::new,
+                            ModBlocks.SPARK_CHAMBER_GEN_BLOCK.get()).build(null));
 
     
     public static void register(IEventBus eventBus) {
