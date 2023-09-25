@@ -33,7 +33,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTicker<GreebleGenBlockEntity>, MenuProvider {
+public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
 
 	private static final int POWERGEN_CAPACITY = 20000;
     private static final int POWERGEN_RECEIVE = 0;
@@ -87,13 +87,6 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
     }
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        itemsLazy = LazyOptional.of(() -> itemHandler);
-        energyLazy = LazyOptional.of(() -> energyStorage);
-    }
-
-    @Override
     public void invalidateCaps()  {
         super.invalidateCaps();
         itemsLazy.invalidate();
@@ -127,8 +120,7 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
-	@SuppressWarnings("deprecation")
-	public void tickk() {
+    public void tickServer(Level level, BlockPos pos, BlockState state, GreebleGenBlockEntity be) {
 		tickCount++;
 		energyStorage.createEnergy(Math.min(nutLevel, (int)(satLevel + 0.5f)) * POWERGEN_MAXGEN / 100);
 		sendOutPower();
@@ -153,12 +145,6 @@ public class GreebleGenBlockEntity extends BlockEntity implements BlockEntityTic
 			setChanged();
 		}
 	}
-
-	@Override
-    public void tick(Level level, BlockPos pos, BlockState state, GreebleGenBlockEntity be) {
-        be.tickk();
-        return;
-    }
 
     private void sendOutPower() {
         AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());

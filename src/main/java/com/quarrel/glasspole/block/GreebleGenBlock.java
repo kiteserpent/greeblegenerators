@@ -74,7 +74,7 @@ public class GreebleGenBlock extends BaseEntityBlock {
         }
         return (lvl, pos, blockState, t) -> {
             if (t instanceof GreebleGenBlockEntity be) {
-                be.tick(lvl, pos, blockState, be);
+                be.tickServer(lvl, pos, blockState, be);
             }
         };
     }

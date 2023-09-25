@@ -27,15 +27,15 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class SparkChamberGenBlockEntity extends BlockEntity {
 
-    private static final int SPARK_ENERGY = 1000;
+    private static final int SPARK_ENERGY = 2500;
 	private static final int POWERGEN_CAPACITY = SPARK_ENERGY * 10;
     private static final int POWERGEN_RECEIVE = 0;
     private static final int POWERGEN_MAXGEN = POWERGEN_CAPACITY;
     private static final int POWERGEN_SEND = POWERGEN_CAPACITY;
     
-    private EnergyStoragePlus energyStorage =
+    private final EnergyStoragePlus energyStorage =
     		new EnergyStoragePlus(POWERGEN_CAPACITY, POWERGEN_RECEIVE, POWERGEN_SEND);
-    private LazyOptional<IEnergyStorage> energyLazy = LazyOptional.of(() -> energyStorage);
+    private final LazyOptional<IEnergyStorage> energyLazy = LazyOptional.of(() -> energyStorage);
 
     public SparkChamberGenBlockEntity(BlockPos pPos, BlockState pState) {
 		super(ModBlockEntities.SPARK_CHAMBER_GEN_BLOCK_ENTITY.get(), pPos, pState);
@@ -56,12 +56,25 @@ public class SparkChamberGenBlockEntity extends BlockEntity {
         energyLazy.invalidate();
     }
 
+    @Override
+    protected void saveAdditional(@Nonnull CompoundTag nbt) {
+        super.saveAdditional(nbt);
+        nbt.put("energy", energyStorage.serializeNBT());
+    }
+
+    @Override
+    public void load(CompoundTag nbt) {
+        energyStorage.deserializeNBT(nbt.get("energy"));
+        super.load(nbt);
+    }
+
     public void doRandomTick() {
     	energyStorage.createEnergy(SPARK_ENERGY);
-    	sendOutPower();
-    	// comment out for testing
-    	// energyStorage.setEnergy(0);
 	}
+
+    public void tickServer(Level level, BlockPos pos, BlockState state, SparkChamberGenBlockEntity be) {
+        sendOutPower();
+    }
 
     private void sendOutPower() {
         AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());

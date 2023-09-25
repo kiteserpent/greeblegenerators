@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.energy.CapabilityEnergy;
 
 public class SparkChamberGenBlock extends BaseEntityBlock {
 
@@ -69,11 +68,25 @@ public class SparkChamberGenBlock extends BaseEntityBlock {
 
     @Override
 	public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRandom) {
-		if (inDark(pLevel, pBlockPos)) {
+		if (!pLevel.isClientSide() && inDark(pLevel, pBlockPos)) {
 		    BlockEntity be = pLevel.getBlockEntity(pBlockPos);
 		    if (be instanceof SparkChamberGenBlockEntity) {
 		        ((SparkChamberGenBlockEntity) be).doRandomTick();
 		    }
 		}
 	}
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        if (pLevel.isClientSide()) {
+            return null;
+        }
+        return (lvl, pos, blockState, t) -> {
+            if (t instanceof SparkChamberGenBlockEntity be) {
+                be.tickServer(lvl, pos, blockState, be);
+            }
+        };
+    }
+
 }

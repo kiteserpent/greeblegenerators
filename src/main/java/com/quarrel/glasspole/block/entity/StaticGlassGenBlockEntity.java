@@ -16,9 +16,9 @@ import com.quarrel.glasspole.EnergyStoragePlus;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class StaticGlassGenBlockEntity extends BlockEntity implements BlockEntityTicker<StaticGlassGenBlockEntity> {
+public class StaticGlassGenBlockEntity extends BlockEntity {
 
-	private static final int POWERGEN_CAPACITY = 10;
+	private static final int POWERGEN_CAPACITY = 5;
     private static final int POWERGEN_RECEIVE = 0;
     private static final int POWERGEN_SEND = 1;
 
@@ -29,12 +29,11 @@ public class StaticGlassGenBlockEntity extends BlockEntity implements BlockEntit
 
     public StaticGlassGenBlockEntity(BlockPos pPos, BlockState pState) {
 		super(ModBlockEntities.STATIC_GLASS_GEN_BLOCK_ENTITY.get(), pPos, pState);
-		// TODO Auto-generated constructor stub
 	}
     
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-      if (cap == CapabilityEnergy.ENERGY) {
+      if ((cap == CapabilityEnergy.ENERGY) & (side != Direction.UP)) {
         return energyLazy.cast();
       }
       return super.getCapability(cap, side);
@@ -46,76 +45,29 @@ public class StaticGlassGenBlockEntity extends BlockEntity implements BlockEntit
       energyLazy.invalidate();
     }
 
-    @Override
-    public void load(CompoundTag tag) {
-        if (tag.contains("Energy")) {
-            energyStorage.deserializeNBT(tag.get("Energy"));
-        }
-        super.load(tag);
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag tag) {
-        tag.put("Energy", energyStorage.serializeNBT());
-    }
-    
-
-	public void tick() {
-        sendOutPower();
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-    public void tick(Level level, BlockPos pos, BlockState state, StaticGlassGenBlockEntity be) {
-        be.tick();
-    }
-
     private void sendOutPower() {
         AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());
         if (capacity.get() > 0) {
             for (Direction direction : Direction.values()) {
-                BlockEntity be = this.level.getBlockEntity(this.worldPosition.relative(direction));
-                if (be == null) {
-                    continue;
-                }
-                be.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
-                    if (be != this && otherStorage.canReceive()) {
-                        int canSend = energyStorage.extractEnergy(POWERGEN_SEND, true);
-                        int didSend = otherStorage.receiveEnergy(canSend, false);
-                        energyStorage.extractEnergy(didSend, false);
-                        setChanged();
-                    }
-                });
-/*
- * 		McJty's code
-                BlockEntity be = level.getBlockEntity(worldPosition.relative(direction));
-                if (be != null) {
-                    boolean doContinue = be.getCapability(CapabilityEnergy.ENERGY, direction);
-                    		be.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).map(handler -> {
-                                if (handler.canReceive()) {
-                                    int received = handler.receiveEnergy(Math.min(capacity.get(), POWERGEN_SEND), false);
-                                    capacity.addAndGet(-received);
-                                    energyStorage.(received, false);
-                                    setChanged();
-                                    return capacity.get() > 0;
-                                } else {
-                                    return true;
-                                }
-                            }
-                    ).orElse(true);
-                    if (!doContinue) {
-                        return;
-                    }
-                }
-*/
+            	if (direction != Direction.UP) {
+		            BlockEntity otherBE = this.level.getBlockEntity(this.worldPosition.relative(direction));
+		            if (otherBE == null) {
+		                continue;
+		            }
+		            otherBE.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
+		                if (otherBE != this && otherStorage.canReceive()) {
+		                    otherStorage.receiveEnergy(POWERGEN_SEND, false);
+		                }
+		            });
+            	}
             }
         }
     }
 
 	public void rub() {
-		if (energyStorage.createEnergy(1) > 0) {
-			setChanged();
-		}
+		energyStorage.createEnergy(POWERGEN_CAPACITY);
+		sendOutPower();
+		energyStorage.setEnergy(0);
 	}
 
 }

@@ -5,14 +5,18 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.storage.WorldData;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -30,12 +34,15 @@ public class GreebleCageBlock extends Block {
        return this.defaultBlockState().setValue(FULL, Boolean.valueOf(false));
     }
 
-	@Override
+    public boolean canSurvive(BlockState pBlockState, LevelReader pLevelReader, BlockPos pBlockPos) {
+    	return pLevelReader.getBlockState(pBlockPos.below()).is(Blocks.GRASS_BLOCK);
+    }
+
+    @Override
 	protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
 		pBuilder.add(FULL);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRandom) {
 		if (!pLevel.isClientSide()) {
@@ -43,9 +50,7 @@ public class GreebleCageBlock extends Block {
 				pLevel.setBlock(pBlockPos, pState.setValue(FULL, Boolean.valueOf(true)), UPDATE_ALL);
 			}
 		}
-		super.tick(pState, pLevel, pBlockPos, pRandom);
 	}
-
     
     private static final VoxelShape SHAPE = Block.box(2, 0, 4, 13, 8, 12);
 

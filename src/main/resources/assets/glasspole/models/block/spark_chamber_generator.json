@@ -9,40 +9,54 @@
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [0, 8, 8, 16], "texture": "#faces"},
-				"east": {"uv": [0, 8, 8, 16], "texture": "#faces"},
-				"south": {"uv": [0, 8, 8, 16], "texture": "#faces"},
-				"west": {"uv": [0, 8, 8, 16], "texture": "#faces"},
-				"up": {"uv": [0, 0, 8, 8], "texture": "#faces"},
-				"down": {"uv": [8, 8, 16, 16], "texture": "#faces", "cullface": "down"}
+				"north": {"uv": [0, 8, 8, 16], "texture": "faces"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "faces"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "faces"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "faces"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "faces"},
+				"down": {"uv": [8, 8, 16, 16], "texture": "faces", "cullface": "down"}
 			}
 		},
 		{
-			"from": [15.9, 15.9, 15.9],
-			"to": [0.1, 0.1, 0.1],
+			"from": [16, 11, 16],
+			"to": [0, 5, 0],
 			"faces": {
-				"north": {"uv": [0, 8, 8, 16], "texture": "#faces"},
-				"east": {"uv": [0, 8, 8, 16], "texture": "#faces"},
-				"south": {"uv": [0, 8, 8, 16], "texture": "#faces"},
-				"west": {"uv": [0, 8, 8, 16], "texture": "#faces"},
-				"down": {"uv": [0, 0, 8, 8], "texture": "#faces"},
-				"up": {"uv": [8, 8, 16, 16], "texture": "#faces"}
+				"up": {"uv": [8, 8, 16, 16], "texture": "faces"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "faces"}
+			}
+		},
+		{
+			"from": [11, 16, 16],
+			"to": [5, 0, 0],
+			"faces": {
+				"east": {"uv": [0, 8, 8, 16], "texture": "faces"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "faces"}
+			}
+		},
+		{
+			"from": [16, 16, 11],
+			"to": [0, 0, 5],
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "faces"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "faces"}
 			}
 		}
 	],
 	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 0, -4.5],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 0, -4.5],
+			"scale": [0.4, 0.4, 0.4]
+		},
 		"firstperson_righthand": {
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"scale": [0.4, 0.4, 0.4]
-		},
-		"thirdperson_righthand": {
-			"translation": [0, 0, -3],
-			"scale": [0.4, 0.4, 0.4]
-		},
-		"thirdperson_lefthand": {
-			"translation": [0, 0, -3],
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {

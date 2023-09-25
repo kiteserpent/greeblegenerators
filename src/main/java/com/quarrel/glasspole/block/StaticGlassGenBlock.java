@@ -16,8 +16,6 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -48,35 +46,10 @@ public class StaticGlassGenBlock extends BaseEntityBlock {
 
     /* BLOCK ENTITY */
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        /*
-    	if (pState.getBlock() != pNewState.getBlock()) {
-    	    BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-    	    if (blockEntity instanceof StaticGlassGenBlockEntity) {
-    	        ((StaticGlassGenBlockEntity) blockEntity).drops();
-    	    }
-    	}
-    	*/
-        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
-    }
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new StaticGlassGenBlockEntity(pPos, pState);
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (!pLevel.isClientSide()) {
-            return (lvl, pos, stt, te) -> {
-                if (te instanceof StaticGlassGenBlockEntity generator) generator.tick();
-            };
-        }
-        return null;
     }
 
     @Override
