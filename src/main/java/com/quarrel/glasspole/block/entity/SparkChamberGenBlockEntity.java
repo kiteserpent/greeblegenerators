@@ -58,7 +58,6 @@ public class SparkChamberGenBlockEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(@Nonnull CompoundTag nbt) {
-        super.saveAdditional(nbt);
         nbt.put("energy", energyStorage.serializeNBT());
     }
 
@@ -70,6 +69,7 @@ public class SparkChamberGenBlockEntity extends BlockEntity {
 
     public void doRandomTick() {
     	energyStorage.createEnergy(SPARK_ENERGY);
+    	setChanged();
 	}
 
     public void tickServer(Level level, BlockPos pos, BlockState state, SparkChamberGenBlockEntity be) {
@@ -89,6 +89,7 @@ public class SparkChamberGenBlockEntity extends BlockEntity {
                         int canSend = energyStorage.extractEnergy(POWERGEN_SEND, true);
                         int didSend = otherStorage.receiveEnergy(canSend, false);
                         energyStorage.extractEnergy(didSend, false);
+                        setChanged();	// assumption
                     }
                 });
             }

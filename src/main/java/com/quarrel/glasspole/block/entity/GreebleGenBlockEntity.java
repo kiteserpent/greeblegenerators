@@ -52,12 +52,11 @@ public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
     		setChanged();
     	}
     };
+    private final LazyOptional<IItemHandler> itemsLazy = LazyOptional.of(() -> itemHandler);
     
-    private LazyOptional<IItemHandler> itemsLazy = LazyOptional.empty();
-    
-    private EnergyStoragePlus energyStorage =
+    private final EnergyStoragePlus energyStorage =
     		new EnergyStoragePlus(POWERGEN_CAPACITY, POWERGEN_RECEIVE, POWERGEN_SEND);
-    private LazyOptional<IEnergyStorage> energyLazy = LazyOptional.of(() -> energyStorage);
+    private final LazyOptional<IEnergyStorage> energyLazy = LazyOptional.of(() -> energyStorage);
 
     public GreebleGenBlockEntity(BlockPos pPos, BlockState pState) {
 		super(ModBlockEntities.GREEBLE_GEN_BLOCK_ENTITY.get(), pPos, pState);
@@ -126,7 +125,8 @@ public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
 		sendOutPower();
 		if (tickCount % EATSPAN == 0) {
 			ItemStack food = itemHandler.getStackInSlot(FOOD_SLOT);
-			FoodProperties foodProps = food.getItem().getFoodProperties();
+			// FoodProperties foodProps = food.getItem().getFoodProperties();
+			FoodProperties foodProps = food.getItem().getFoodProperties(food, null);
 	        if (food != null & foodProps != null) {
 		        int foodNut = foodProps.getNutrition();
 		        float foodSat = (float)foodNut * 2.0f * Math.min(3.0f, foodProps.getSaturationModifier());
