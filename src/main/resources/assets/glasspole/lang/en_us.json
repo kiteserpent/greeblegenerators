@@ -9,5 +9,7 @@
 	"block.glasspole.static_glass_generator": "Static Generator",
 	"block.glasspole.greeble_cage": "Greeble Cage",
 	"block.glasspole.greeble_generator": "Greeble Generator",
-	"block.glasspole.spark_chamber_generator": "Spark Chamber"
+	"block.glasspole.spark_chamber_generator": "Spark Chamber",
+	
+	"itemGroup.greebletab": "Greeble Generators"
 }
