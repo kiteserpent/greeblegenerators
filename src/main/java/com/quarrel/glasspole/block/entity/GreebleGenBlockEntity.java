@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.quarrel.glasspole.CommonConfigs;
 import com.quarrel.glasspole.EnergyStoragePlus;
 import com.quarrel.glasspole.menu.GreebleGenMenu;
 
@@ -37,11 +38,11 @@ public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
 
 	private static final int POWERGEN_CAPACITY = 20000;
     private static final int POWERGEN_RECEIVE = 0;
-    private static final int POWERGEN_MAXGEN = 50;
+    private static final int POWERGEN_MAXGEN = CommonConfigs.PEAK_GREEBLE_GEN_RATE.get();
     private static final int POWERGEN_SEND = 2 * POWERGEN_MAXGEN;
     private static final int FOOD_SLOT = 0;
-    private static final int FOODSPAN = 100;
-    private static final int EATSPAN = 10;
+    private static final int HUNGERSPAN = 100;	// ticks between fullness levels falling
+    private static final int EATSPAN = 10;		// ticks between attempts to eat more
     private int tickCount = 0;
     public int nutLevel = 0;
     public float satLevel = 0.0f;
@@ -86,6 +87,13 @@ public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
+    public void setRemoved() {
+        super.setRemoved();
+        itemsLazy.invalidate();
+        energyLazy.invalidate();
+    }
+
+    @Override
     public void invalidateCaps()  {
         super.invalidateCaps();
         itemsLazy.invalidate();
@@ -120,10 +128,7 @@ public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void tickServer(Level level, BlockPos pos, BlockState state, GreebleGenBlockEntity be) {
-		tickCount++;
-		energyStorage.createEnergy(Math.min(nutLevel, (int)(satLevel + 0.5f)) * POWERGEN_MAXGEN / 100);
-		sendOutPower();
-		if (tickCount % EATSPAN == 0) {
+		if (tickCount++ % EATSPAN == 0) {
 			ItemStack food = itemHandler.getStackInSlot(FOOD_SLOT);
 			// FoodProperties foodProps = food.getItem().getFoodProperties();
 			FoodProperties foodProps = food.getItem().getFoodProperties(food, null);
@@ -138,8 +143,10 @@ public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
 		        }
 	        }
 		}
-		if (tickCount >= FOODSPAN) {
-			tickCount -= FOODSPAN;
+		energyStorage.createEnergy((Math.min(nutLevel, (int)(satLevel + 0.5f)) * POWERGEN_MAXGEN + 50) / 100);
+		sendOutPower();
+		if (tickCount >= HUNGERSPAN) {
+			tickCount -= HUNGERSPAN;
 			if (nutLevel > 0)		--nutLevel;
 			if (satLevel > 0.0f)	satLevel = Math.max(satLevel - 1.0f, 0.0f);
 			setChanged();
@@ -147,22 +154,25 @@ public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
 	}
 
     private void sendOutPower() {
-        AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());
-        if (capacity.get() > 0) {
+        AtomicInteger stored = new AtomicInteger(energyStorage.getEnergyStored());
+        if (stored.get() > 0) {
             for (Direction direction : Direction.values()) {
-                BlockEntity be = this.level.getBlockEntity(this.worldPosition.relative(direction));
-                if (be == null) {
+                BlockEntity otherBE = this.level.getBlockEntity(this.worldPosition.relative(direction));
+                if (otherBE == null) {
                     continue;
                 }
-                be.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
-                    if (be != this && otherStorage.canReceive()) {
-                        int canSend = energyStorage.extractEnergy(POWERGEN_SEND, true);
+                otherBE.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
+                    if (otherStorage.canReceive()) {
+                        int canSend = Math.min(stored.get(), GreebleGenBlockEntity.POWERGEN_SEND);
                         int didSend = otherStorage.receiveEnergy(canSend, false);
                         energyStorage.extractEnergy(didSend, false);
-                        setChanged();
+                        stored.addAndGet(-didSend);
                     }
                 });
-            }
+            	if (stored.get() <= 0) {
+            		break;
+            	}
+        	}
         }
     }
     

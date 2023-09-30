@@ -1,5 +1,10 @@
 {
 	"variants": {
-		"": { "model": "glasspole:block/spark_chamber_generator" }
+		"sparking=false": {
+		  "model": "glasspole:block/spark_chamber_generator"
+		},
+		"sparking=true": {
+		  "model": "glasspole:block/spark_chamber_sparking"
+		}
 	}
 }

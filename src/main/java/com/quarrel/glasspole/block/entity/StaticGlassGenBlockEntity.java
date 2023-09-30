@@ -20,7 +20,7 @@ public class StaticGlassGenBlockEntity extends BlockEntity {
 
 	private static final int POWERGEN_CAPACITY = 5;
     private static final int POWERGEN_RECEIVE = 0;
-    private static final int POWERGEN_SEND = 1;
+    private static final int POWERGEN_SEND = POWERGEN_CAPACITY;
 
     private final EnergyStoragePlus energyStorage =
     		new EnergyStoragePlus(POWERGEN_CAPACITY, POWERGEN_RECEIVE, POWERGEN_SEND);
@@ -46,8 +46,8 @@ public class StaticGlassGenBlockEntity extends BlockEntity {
     }
 
     private void sendOutPower() {
-        AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());
-        if (capacity.get() > 0) {
+        AtomicInteger stored = new AtomicInteger(energyStorage.getEnergyStored());
+        if (stored.get() > 0) {
             for (Direction direction : Direction.values()) {
             	if (direction != Direction.UP) {
 		            BlockEntity otherBE = this.level.getBlockEntity(this.worldPosition.relative(direction));
@@ -55,10 +55,16 @@ public class StaticGlassGenBlockEntity extends BlockEntity {
 		                continue;
 		            }
 		            otherBE.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
-		                if (otherBE != this && otherStorage.canReceive()) {
-		                    otherStorage.receiveEnergy(POWERGEN_SEND, false);
+		                if (otherStorage.canReceive()) {
+	                        int canSend = stored.get();
+	                        int didSend = otherStorage.receiveEnergy(canSend, false);
+	                        energyStorage.extractEnergy(didSend, false);
+	                        stored.addAndGet(-didSend);
 		                }
 		            });
+            	}
+            	if (stored.get() <= 0) {
+            		break;
             	}
             }
         }
