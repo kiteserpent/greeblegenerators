@@ -1,4 +1,5 @@
 {
+    "ambientocclusion": false,
 	"textures": {
 		"faces": "glasspole:block/spark_chamber_generator",
 		"particle": "glasspole:block/spark_chamber_generator"

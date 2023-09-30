@@ -1,11 +1,10 @@
 package com.quarrel.glasspole.block;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
+import com.quarrel.glasspole.GlassPole;
 import com.quarrel.glasspole.block.entity.SparkChamberGenBlockEntity;
-
+import com.mojang.logging.LogUtils;
+import java.util.Random;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -15,8 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RedstoneLampBlock;
-import net.minecraft.world.level.block.RedstoneTorchBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -37,7 +34,7 @@ public class SparkChamberGenBlock extends BaseEntityBlock {
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-       return this.defaultBlockState().setValue(SPARKING, Boolean.valueOf(false));
+       return this.defaultBlockState();
     }
 
     @Override
@@ -85,33 +82,23 @@ public class SparkChamberGenBlock extends BaseEntityBlock {
     
     @Override
 	public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRandom) {
-    	if (pState.getValue(SPARKING)) {
-			pLevel.setBlock(pBlockPos, pState.setValue(SPARKING, Boolean.valueOf(false)), UPDATE_ALL);
-			return;
-    	}
-    	if (!inDark(pLevel, pBlockPos))
-    		return;
-		if (!pLevel.isClientSide()) {
+    	if (inDark(pLevel, pBlockPos) && !pLevel.isClientSide()) {
 		    BlockEntity be = pLevel.getBlockEntity(pBlockPos);
 		    if (be instanceof SparkChamberGenBlockEntity) {
 		        ((SparkChamberGenBlockEntity) be).doRandomTick();
 		    }
 		}
-		pLevel.setBlock(pBlockPos, pState.setValue(SPARKING, Boolean.valueOf(true)), UPDATE_ALL);
-		pLevel.scheduleTick(pBlockPos, this, 4);
-		pLevel.levelEvent(UPDATE_ALL_IMMEDIATE, pBlockPos, UPDATE_ALL);
 	}
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (pLevel.isClientSide()) {
-            return null;
-        }
-        return (lvl, pos, blockState, t) -> {
-            if (t instanceof SparkChamberGenBlockEntity be) {
-                be.tickServer(lvl, pos, blockState, be);
-            }
+        return (lvl, pos, stat, t) -> {
+        	if (!lvl.isClientSide()) {
+	            if (t instanceof SparkChamberGenBlockEntity be) {
+	                be.tickServer(lvl, pos, stat, be);
+	            }
+        	}
         };
     }
 
