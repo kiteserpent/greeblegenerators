@@ -3,7 +3,7 @@
 
     "textures": {
 		"particle": "minecraft:block/glass",
-        "base": "minecraft:block/smooth_stone",
+        "base": "glasspole:block/glass_pole",
         "pole": "glasspole:block/glass_pole"
     },
 
@@ -12,23 +12,23 @@
 			"from": [2, 0, 2],
 			"to": [14, 3, 14],
 			"faces": {
-				"down": {"uv": [0, 0, 16, 16], "texture": "#base", "cullface": "down"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#base"},
-				"north": {"uv": [0, 0, 16, 3], "texture": "#base"},
-				"east": {"uv": [0, 0, 16, 3], "texture": "#base"},
-				"south": {"uv": [0, 0, 16, 3], "texture": "#base"},
-				"west": {"uv": [0, 0, 16, 3], "texture": "#base"}
+				"down": {"uv": [8, 8, 16, 16], "texture": "#base", "cullface": "down"},
+				"up": {"uv": [0, 8, 8, 16], "texture": "#base"},
+				"north": {"uv": [0, 4, 8, 6], "texture": "#base"},
+				"east": {"uv": [0, 4, 8, 6], "texture": "#base"},
+				"south": {"uv": [0, 4, 8, 6], "texture": "#base"},
+				"west": {"uv": [0, 4, 8, 6], "texture": "#base"}
 			}
 		},
 		{
 			"from": [6, 3, 6],
 			"to": [10, 13, 10],
 			"faces": {
-				"north": {"uv": [0, 0, 8, 16], "texture": "#pole"},
-				"east": {"uv": [0, 0, 8, 16], "texture": "#pole"},
-				"south": {"uv": [0, 0, 8, 16], "texture": "#pole"},
-				"west": {"uv": [0, 0, 8, 16], "texture": "#pole"},
-				"up": {"uv": [8, 0, 16, 8], "texture": "#pole"}
+				"north": {"uv": [8, 0, 10, 4], "texture": "#pole"},
+				"east": {"uv": [8, 0, 10, 4], "texture": "#pole"},
+				"south": {"uv": [8, 0, 10, 4], "texture": "#pole"},
+				"west": {"uv": [8, 0, 10, 4], "texture": "#pole"},
+				"up": {"uv": [10, 0, 12, 2], "texture": "#pole"}
 			}
 		}
 	],

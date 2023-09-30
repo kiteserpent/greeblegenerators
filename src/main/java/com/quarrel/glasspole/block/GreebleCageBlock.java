@@ -30,6 +30,11 @@ public class GreebleCageBlock extends Block {
         this.registerDefaultState(this.defaultBlockState().setValue(FULL, Boolean.valueOf(false)));
     }
 
+    @Override
+	protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
+		pBuilder.add(FULL);
+	}
+
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext p_55659_) {
        return this.defaultBlockState().setValue(FULL, Boolean.valueOf(false));
@@ -45,11 +50,6 @@ public class GreebleCageBlock extends Block {
     {
         return !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, side, neighborState, level, pos, neighborPos);
     }
-
-    @Override
-	protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-		pBuilder.add(FULL);
-	}
 
 	@Override
 	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRandom) {

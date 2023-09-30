@@ -32,7 +32,8 @@ public class GreebleGenBlock extends BaseEntityBlock {
 
     /* BLOCK ENTITY */
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
     	if (pState.getBlock() != pNewState.getBlock()) {
     	    BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
@@ -40,6 +41,7 @@ public class GreebleGenBlock extends BaseEntityBlock {
     	        ((GreebleGenBlockEntity) blockEntity).drops();
     	    }
     	}
+    	super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
     @Override

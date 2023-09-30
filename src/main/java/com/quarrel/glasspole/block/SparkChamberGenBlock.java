@@ -9,24 +9,41 @@ import com.quarrel.glasspole.block.entity.SparkChamberGenBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RedstoneLampBlock;
+import net.minecraft.world.level.block.RedstoneTorchBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SparkChamberGenBlock extends BaseEntityBlock {
+    public static final BooleanProperty SPARKING = BooleanProperty.create("sparking");
 
     public SparkChamberGenBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.defaultBlockState().setValue(SPARKING, Boolean.valueOf(false)));
     }
+
+    @Nullable
+    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+       return this.defaultBlockState().setValue(SPARKING, Boolean.valueOf(false));
+    }
+
+    @Override
+	protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
+		pBuilder.add(SPARKING);
+	}
 
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
@@ -65,15 +82,24 @@ public class SparkChamberGenBlock extends BaseEntityBlock {
         }
         return true;
     }
-
+    
     @Override
 	public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRandom) {
-		if (!pLevel.isClientSide() && inDark(pLevel, pBlockPos)) {
+    	if (pState.getValue(SPARKING)) {
+			pLevel.setBlock(pBlockPos, pState.setValue(SPARKING, Boolean.valueOf(false)), UPDATE_ALL);
+			return;
+    	}
+    	if (!inDark(pLevel, pBlockPos))
+    		return;
+		if (!pLevel.isClientSide()) {
 		    BlockEntity be = pLevel.getBlockEntity(pBlockPos);
 		    if (be instanceof SparkChamberGenBlockEntity) {
 		        ((SparkChamberGenBlockEntity) be).doRandomTick();
 		    }
 		}
+		pLevel.setBlock(pBlockPos, pState.setValue(SPARKING, Boolean.valueOf(true)), UPDATE_ALL);
+		pLevel.scheduleTick(pBlockPos, this, 4);
+		pLevel.levelEvent(UPDATE_ALL_IMMEDIATE, pBlockPos, UPDATE_ALL);
 	}
 
     @Nullable

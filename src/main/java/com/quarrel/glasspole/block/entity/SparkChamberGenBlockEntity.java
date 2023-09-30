@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.quarrel.glasspole.CommonConfigs;
 import com.quarrel.glasspole.EnergyStoragePlus;
 
 import net.minecraft.core.BlockPos;
@@ -27,11 +28,10 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class SparkChamberGenBlockEntity extends BlockEntity {
 
-    private static final int SPARK_ENERGY = 2500;
-	private static final int POWERGEN_CAPACITY = SPARK_ENERGY * 10;
+    private static final int SPARK_ENERGY = CommonConfigs.SPARK_CHAMBER_SPARK.get();
+	private static final int POWERGEN_CAPACITY = SPARK_ENERGY;
     private static final int POWERGEN_RECEIVE = 0;
-    private static final int POWERGEN_MAXGEN = POWERGEN_CAPACITY;
-    private static final int POWERGEN_SEND = POWERGEN_CAPACITY;
+    private static final int POWERGEN_SEND = SPARK_ENERGY;
     
     private final EnergyStoragePlus energyStorage =
     		new EnergyStoragePlus(POWERGEN_CAPACITY, POWERGEN_RECEIVE, POWERGEN_SEND);
@@ -77,21 +77,24 @@ public class SparkChamberGenBlockEntity extends BlockEntity {
     }
 
     private void sendOutPower() {
-        AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());
-        if (capacity.get() > 0) {
+        AtomicInteger stored = new AtomicInteger(energyStorage.getEnergyStored());
+        if (stored.get() > 0) {
             for (Direction direction : Direction.values()) {
-                BlockEntity be = this.level.getBlockEntity(this.worldPosition.relative(direction));
-                if (be == null) {
+                BlockEntity otherBE = this.level.getBlockEntity(this.worldPosition.relative(direction));
+                if (otherBE == null) {
                     continue;
                 }
-                be.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
-                    if (be != this && otherStorage.canReceive()) {
-                        int canSend = energyStorage.extractEnergy(POWERGEN_SEND, true);
+                otherBE.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
+                    if (otherStorage.canReceive()) {
+                        int canSend = Math.min(stored.get(), SparkChamberGenBlockEntity.POWERGEN_SEND);
                         int didSend = otherStorage.receiveEnergy(canSend, false);
                         energyStorage.extractEnergy(didSend, false);
-                        setChanged();	// assumption
+                        stored.addAndGet(-didSend);
                     }
                 });
+            	if (stored.get() <= 0) {
+            		break;
+            	}
             }
         }
     }
