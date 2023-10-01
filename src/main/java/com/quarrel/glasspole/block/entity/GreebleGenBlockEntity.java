@@ -94,13 +94,6 @@ public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public void invalidateCaps()  {
-        super.invalidateCaps();
-        itemsLazy.invalidate();
-        energyLazy.invalidate();
-    }
-
-    @Override
     protected void saveAdditional(@Nonnull CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
         nbt.put("energy", energyStorage.serializeNBT());

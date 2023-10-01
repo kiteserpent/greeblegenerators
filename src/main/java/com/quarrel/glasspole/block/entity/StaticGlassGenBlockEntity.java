@@ -40,7 +40,7 @@ public class StaticGlassGenBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void invalidateCaps() {
+    public void setRemoved() {
       super.invalidateCaps();
       energyLazy.invalidate();
     }
