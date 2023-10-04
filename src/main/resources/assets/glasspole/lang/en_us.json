@@ -11,5 +11,7 @@
 	"block.glasspole.greeble_cage": "Greeble Cage",
 	"block.glasspole.greeble_generator": "Greeble Generator",
 	"block.glasspole.spark_chamber_generator": "Spark Chamber",
-	"block.glasspole.sulfur_magma_block": "Sulfur-Infused Magma"
+	"block.glasspole.sulfur_magma_block": "Sulfur-Infused Magma",
+	
+	"itemGroup.greebletab": "Greeble Generators"
 }
