@@ -6,11 +6,11 @@ import com.quarrel.glasspole.GlassPole;
 import com.quarrel.glasspole.item.ModCreativeModeTab;
 import com.quarrel.glasspole.item.ModItems;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -57,11 +57,10 @@ public class ModBlocks {
             () -> new SparkChamberGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(1.0f).randomTicks().sound(SoundType.GLASS).noOcclusion()), ModCreativeModeTab.GREEBLE_TAB);
 
     public static final RegistryObject<SulfurMagmaBlock> SULFUR_MAGMA_BLOCK = registerBlock("sulfur_magma_block",
-            () -> new SulfurMagmaBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.NETHER).requiresCorrectToolForDrops().lightLevel((p_152684_) -> {
+            () -> new SulfurMagmaBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.NETHER).strength(0.5F).requiresCorrectToolForDrops().lightLevel((bstate) -> {
                 return 3;
-            }).randomTicks().strength(0.5F).isValidSpawn((p_187421_, p_187422_, p_187423_, p_187424_) -> {
-               return p_187424_.fireImmune();
-            }).hasPostProcess(Blocks::always).emissiveRendering(Blocks::always)));), CreativeModeTab.TAB_MISC);
-
-    
+            }).randomTicks().hasPostProcess(SulfurMagmaBlock::always).emissiveRendering(SulfurMagmaBlock::always).isValidSpawn((p_187421_, p_187422_, p_187423_, p_187424_) -> {
+                return p_187424_.fireImmune();
+            })),
+            ModCreativeModeTab.GREEBLE_TAB);
 }
