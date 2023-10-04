@@ -51,7 +51,7 @@ public class SparkChamberGenBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void invalidateCaps()  {
+    public void setRemoved()  {
         super.invalidateCaps();
         energyLazy.invalidate();
     }

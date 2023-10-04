@@ -3,6 +3,7 @@ package com.quarrel.glasspole.block;
 import java.util.function.Supplier;
 
 import com.quarrel.glasspole.GlassPole;
+import com.quarrel.glasspole.item.ModCreativeModeTab;
 import com.quarrel.glasspole.item.ModItems;
 
 import net.minecraft.world.item.BlockItem;
@@ -34,7 +35,7 @@ public class ModBlocks {
     }
 
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block,
-                                                                            CreativeModeTab tab) {
+    		CreativeModeTab tab) {
         // some preinit code
         return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(),
                 new Item.Properties().tab(tab)));
@@ -42,16 +43,16 @@ public class ModBlocks {
     
 
     public static final RegistryObject<StaticGlassGenBlock> STATIC_GLASS_GEN_BLOCK = registerBlock("static_glass_generator",
-            () -> new StaticGlassGenBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.0f).sound(SoundType.GLASS).noOcclusion()), CreativeModeTab.TAB_MISC);
+            () -> new StaticGlassGenBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.0f).sound(SoundType.GLASS).noOcclusion()), ModCreativeModeTab.GREEBLE_TAB);
 
     public static final RegistryObject<GreebleCageBlock> GREEBLE_CAGE_BLOCK = registerBlock("greeble_cage",
-            () -> new GreebleCageBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().randomTicks()), CreativeModeTab.TAB_MISC);
+            () -> new GreebleCageBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().randomTicks()), ModCreativeModeTab.GREEBLE_TAB);
 
     public static final RegistryObject<GreebleGenBlock> GREEBLE_GEN_BLOCK = registerBlock("greeble_generator",
-            () -> new GreebleGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f)), CreativeModeTab.TAB_MISC);
+            () -> new GreebleGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.0f)), ModCreativeModeTab.GREEBLE_TAB);
 
     public static final RegistryObject<SparkChamberGenBlock> SPARK_CHAMBER_GEN_BLOCK = registerBlock("spark_chamber_generator",
-            () -> new SparkChamberGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(1.0f).randomTicks().sound(SoundType.GLASS).noOcclusion()), CreativeModeTab.TAB_MISC);
+            () -> new SparkChamberGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(1.0f).randomTicks().sound(SoundType.GLASS).noOcclusion()), ModCreativeModeTab.GREEBLE_TAB);
 
     public static final RegistryObject<SulfurMagmaBlock> SULFUR_MAGMA_BLOCK = registerBlock("sulfur_magma_block",
             () -> new SulfurMagmaBlock(null), CreativeModeTab.TAB_MISC);

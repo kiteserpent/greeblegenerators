@@ -53,7 +53,7 @@ public class GreebleCageBlock extends Block {
 
 	@Override
 	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRandom) {
-		if (!pLevel.isClientSide()) {
+		if (!pLevel.isClientSide() && !pState.getValue(FULL)) {
 			if (!pLevel.hasNearbyAlivePlayer((double)pBlockPos.getX() + 0.5, (double)pBlockPos.getY() + 0.5, (double)pBlockPos.getZ() + 0.5, 24.0)) {
 				pLevel.setBlock(pBlockPos, pState.setValue(FULL, Boolean.valueOf(true)), UPDATE_ALL);
 			}
