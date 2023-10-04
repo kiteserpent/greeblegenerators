@@ -5,9 +5,11 @@
 	"item.glasspole.greeble_generator": "Greeble Generator",
 	"item.glasspole.excitation_frame": "Excitation Frame",
 	"item.glasspole.spark_chamber_generator": "Spark Chamber",
+	"item.glasspole.sulfur_magma_block": "Sulfur-Infused Magma",
 	
 	"block.glasspole.static_glass_generator": "Static Generator",
 	"block.glasspole.greeble_cage": "Greeble Cage",
 	"block.glasspole.greeble_generator": "Greeble Generator",
-	"block.glasspole.spark_chamber_generator": "Spark Chamber"
+	"block.glasspole.spark_chamber_generator": "Spark Chamber",
+	"block.glasspole.sulfur_magma_block": "Sulfur-Infused Magma"
 }
