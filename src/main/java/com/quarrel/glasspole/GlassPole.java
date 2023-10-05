@@ -65,6 +65,6 @@ public class GlassPole
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPARK_CHAMBER_GEN_BLOCK.get(),
 				RenderType.cutout());
         MenuScreens.register(ModMenuTypes.GREEBLE_GENERATOR_MENU.get(), GreebleGenScreen::new);
-        }
+    }
 
 }

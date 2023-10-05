@@ -30,6 +30,11 @@ public class ModBlocks {
 	}
 	
 	// helper methods
+    private static <T extends Block> RegistryObject<T> registerBlockOnly(String name, Supplier<T> block) {
+        RegistryObject<T> toReturn = BLOCKS.register(name, block);
+        return toReturn;
+    }
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn, tab);
@@ -59,8 +64,11 @@ public class ModBlocks {
     public static final RegistryObject<SulfurMagmaBlock> SULFUR_MAGMA_BLOCK = registerBlock("sulfur_magma_block",
             () -> new SulfurMagmaBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.NETHER).strength(0.5F).requiresCorrectToolForDrops().lightLevel((bstate) -> {
                 return 3;
-            }).randomTicks().hasPostProcess(SulfurMagmaBlock::always).emissiveRendering(SulfurMagmaBlock::always).isValidSpawn((p_187421_, p_187422_, p_187423_, p_187424_) -> {
-                return p_187424_.fireImmune();
+            }).randomTicks().hasPostProcess(SulfurMagmaBlock::always).emissiveRendering(SulfurMagmaBlock::always).isValidSpawn((bstat, bget, bpos, ent) -> {
+                return ent.fireImmune();
             })),
             ModCreativeModeTab.GREEBLE_TAB);
+
+    public static final RegistryObject<SulfurBubbleColumnBlock> SULFUR_BUBBLE_COLUMN = registerBlockOnly("sulfur_bubble_column",
+            () -> new SulfurBubbleColumnBlock(BlockBehaviour.Properties.of(Material.BUBBLE_COLUMN).noCollission().noDrops()));
 }

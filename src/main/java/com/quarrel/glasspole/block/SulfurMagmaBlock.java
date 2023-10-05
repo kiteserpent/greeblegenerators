@@ -1,6 +1,7 @@
 package com.quarrel.glasspole.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -8,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BubbleColumnBlock;
 import net.minecraft.world.level.block.MagmaBlock;
@@ -28,14 +30,17 @@ public class SulfurMagmaBlock extends MagmaBlock {
         super(properties);
     }
 
+    @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random p_54809_) {
-    	if (pLevel.isClientSide())
-    		GlassPole.LOGGER.info("in tick Client");
-    	else
-    		GlassPole.LOGGER.info("in tick nonclient");
-    	BubbleColumnBlock.updateColumn(pState, pLevel.above(), pBlockPos);
+    	SulfurBubbleColumnBlock.updateColumn(pLevel, pBlockPos.above(), pState);
     }
 
+    @Override
+    public BlockState updateShape(BlockState p_54811_, Direction p_54812_, BlockState p_54813_, LevelAccessor p_54814_, BlockPos p_54815_, BlockPos p_54816_) {
+        return super.updateShape(p_54811_, p_54812_, p_54813_, p_54814_, p_54815_, p_54816_);
+    }
+
+    @Override
     public void randomTick(BlockState p_54818_, ServerLevel p_54819_, BlockPos p_54820_, Random p_54821_) {
     	if (p_54819_.isClientSide())
     		GlassPole.LOGGER.info("in randomTick Client");
