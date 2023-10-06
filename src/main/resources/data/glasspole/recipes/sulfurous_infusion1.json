@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "pattern": [
+    "s"
+  ],
+  "key": {
+    "s": {
+      "item": "forge:sulfur"
+    }
+  },
+  "result": {
+    "item": "glasspole:sulfurous_infusion"
+  }
+}
