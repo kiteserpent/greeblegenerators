@@ -1,14 +1,15 @@
 {
 	"item.glasspole.static_glass_generator": "Static Generator",
-	"item.glasspole.greeble_cage": "Greeble Cage",
+	"item.glasspole.greeble_cage": "Greeble Trap",
 	"item.glasspole.caged_greeble": "Caged Greeble",
 	"item.glasspole.greeble_generator": "Greeble Generator",
 	"item.glasspole.excitation_frame": "Excitation Frame",
 	"item.glasspole.spark_chamber_generator": "Spark Chamber",
 	"item.glasspole.sulfur_magma_block": "Sulfur-Infused Magma",
+	"item.glasspole.sulfurous_infusion": "Sulfurous Infusion",
 	
 	"block.glasspole.static_glass_generator": "Static Generator",
-	"block.glasspole.greeble_cage": "Greeble Cage",
+	"block.glasspole.greeble_cage": "Greeble Trap",
 	"block.glasspole.greeble_generator": "Greeble Generator",
 	"block.glasspole.spark_chamber_generator": "Spark Chamber",
 	"block.glasspole.sulfur_magma_block": "Sulfur-Infused Magma",

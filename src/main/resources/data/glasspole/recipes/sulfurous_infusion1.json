@@ -1,14 +1,20 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "pattern": [
-    "s"
+    "sss"
   ],
   "key": {
-    "s": {
-      "item": "forge:sulfur"
-    }
+    "s": [
+		{
+		  "tag": "forge:dusts/sulfur"
+		},
+		{
+		  "tag": "forge:gems/sulfur"
+		}
+	]
   },
   "result": {
-    "item": "glasspole:sulfurous_infusion"
+    "item": "glasspole:sulfurous_infusion",
+	"count": 3
   }
 }

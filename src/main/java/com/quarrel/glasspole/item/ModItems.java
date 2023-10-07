@@ -16,8 +16,8 @@ public class ModItems {
     		() -> new Item(new Item.Properties().stacksTo(1).tab(ModCreativeModeTab.GREEBLE_TAB)));
     public static final RegistryObject<Item> EXCITATION_FRAME_ITEM = ITEMS.register("excitation_frame",
     		() -> new Item(new Item.Properties().tab(ModCreativeModeTab.GREEBLE_TAB)));
-    public static final RegistryObject<Item> SULFUROUS_INFUSION_ITEM = ITEMS.register("sulfurous_infusion",
-    		() -> new Item(new Item.Properties().tab(ModCreativeModeTab.GREEBLE_TAB)));
+    public static final RegistryObject<SulfurousInfusionItem> SULFUROUS_INFUSION_ITEM = ITEMS.register("sulfurous_infusion",
+    		() -> new SulfurousInfusionItem(new Item.Properties().tab(ModCreativeModeTab.GREEBLE_TAB)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
