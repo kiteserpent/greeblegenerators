@@ -18,8 +18,8 @@ public class FussyFoodSlot extends SlotItemHandler {
         if (food == null)
         	return false;
         int foodNut = food.getNutrition();
-        int foodSat = (int)((float)foodNut * 2.0f * Math.min(3.0f, food.getSaturationModifier()) + 0.5f);
-        if ((foodNut == foodSat) || (foodNut == 0) || (food.getEffects().size() > 0))
+        int foodSat = (int)((float)foodNut * 2.0f * Math.min(1.5f, food.getSaturationModifier()) + 0.5f);
+        if ((foodNut == foodSat) || (foodSat == 0) || (food.getEffects().size() > 0))
         	return false;
         return true;
 	}

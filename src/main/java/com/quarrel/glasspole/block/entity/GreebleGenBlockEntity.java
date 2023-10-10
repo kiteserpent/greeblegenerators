@@ -5,7 +5,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.quarrel.glasspole.CommonConfigs;
 import com.quarrel.glasspole.EnergyStoragePlus;
 import com.quarrel.glasspole.menu.GreebleGenMenu;
 
@@ -127,7 +126,7 @@ public class GreebleGenBlockEntity extends BlockEntity implements MenuProvider {
 			FoodProperties foodProps = food.getItem().getFoodProperties(food, null);
 	        if (food != null & foodProps != null) {
 		        int foodNut = foodProps.getNutrition();
-		        float foodSat = (float)foodNut * 2.0f * Math.min(3.0f, foodProps.getSaturationModifier());
+		        float foodSat = (float)foodNut * 2.0f * Math.min(1.5f, foodProps.getSaturationModifier());
 		        if ((nutLevel + foodNut <= 100) && (satLevel + foodSat <= 100.0f)) {
 		        	nutLevel += foodNut;
 		        	satLevel += foodSat;
