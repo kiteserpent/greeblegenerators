@@ -16,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -46,6 +47,7 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
     private static final int POWERGEN_SEND = 2 * POWERGEN_MAXGEN;
     private static final int KELP_BURN_TIME = CommonConfigs.KELP_BURN_TIME.get();
     private static final int KELP_BLOCK_BURN_TIME = CommonConfigs.KELP_BLOCK_BURN_TIME.get();
+    private static final int KELPGEN_MIN_DEPTH = CommonConfigs.KELPGEN_MIN_DEPTH.get();
     private static final int KELP_SLOT = 0;
     private int tickCount = 0;
     private int currentRate = 0;
@@ -123,11 +125,12 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
     	if ((depthCheckCounter++ % 20) == 0) {	// don't spam this check
             int depth = 0;
             for (BlockPos pos = this.getBlockPos().above();
-            		this.level.getBlockState(pos).is(Blocks.WATER);
+            		// this.level.getBlockState(pos).is(Blocks.WATER);
+            		this.level.getBlockState(pos).getFluidState().is(FluidTags.WATER);
             		pos = pos.above()) {
-                depth ++;
+                depth++;
             }
-            setDeepEnough(depth >= 20);
+            setDeepEnough(depth >= KELPGEN_MIN_DEPTH);
     	}
     }
     

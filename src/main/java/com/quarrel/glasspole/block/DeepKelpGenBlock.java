@@ -1,12 +1,15 @@
 package com.quarrel.glasspole.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -45,15 +48,16 @@ public class DeepKelpGenBlock extends BaseEntityBlock {
     	super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
-    public void onNeighborChange(BlockState pNewState, Level pLevel, BlockPos pPos, BlockPos pPos2) {
-        GlassPole.LOGGER.info("neighbor changed");
-	    BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-	    if (blockEntity instanceof DeepKelpGenBlockEntity) {
-	        ((DeepKelpGenBlockEntity) blockEntity).checkDepth();
+    @SuppressWarnings("deprecation")
+	@Override
+    public void neighborChanged(BlockState pNewState, Level pLevel, BlockPos pPos, Block pBlock, BlockPos pPos2, boolean dynamicShape) {
+	    BlockEntity ourBE = pLevel.getBlockEntity(pPos);
+	    if (ourBE instanceof DeepKelpGenBlockEntity) {
+	        ((DeepKelpGenBlockEntity) ourBE).checkDepth();
 	    }
-        super.onNeighborChange(pNewState, pLevel, pPos, pPos2);
+        super.neighborChanged(pNewState, pLevel, pPos, pBlock, pPos2, dynamicShape);
     }
-    
+
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos,
                                  Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {

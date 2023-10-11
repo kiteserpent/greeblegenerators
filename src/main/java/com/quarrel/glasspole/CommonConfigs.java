@@ -15,6 +15,7 @@ public class CommonConfigs {
     public static final ForgeConfigSpec.ConfigValue<Integer> DEEPKELP_LOW_GEN_RATE;
     public static final ForgeConfigSpec.ConfigValue<Integer> KELP_BURN_TIME;
     public static final ForgeConfigSpec.ConfigValue<Integer> KELP_BLOCK_BURN_TIME;
+    public static final ForgeConfigSpec.ConfigValue<Integer> KELPGEN_MIN_DEPTH;
 
     static {
         BUILDER.push("Configs for Greeble Generators");
@@ -26,6 +27,7 @@ public class CommonConfigs {
         DEEPKELP_LOW_GEN_RATE =  BUILDER.comment("FE/t produced by a Deep Kelp Generator over normal magma").defineInRange("Deep Kelp FE/t w/normal magma", 10, 1, 50000);
         KELP_BURN_TIME =  BUILDER.comment("Production time for one piece of dried kelp").defineInRange("Dried Kelp power duration (ticks)", 10, 2, 10000);
         KELP_BLOCK_BURN_TIME =  BUILDER.comment("Production time for one block of dried kelp").defineInRange("Dried Kelp Block power duration (ticks)", 100, 2, 10000);
+        KELPGEN_MIN_DEPTH =  BUILDER.comment("Minimum depth for a Keep Kelp Generator to operate").defineInRange("Depth", 20, 1, 500);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }

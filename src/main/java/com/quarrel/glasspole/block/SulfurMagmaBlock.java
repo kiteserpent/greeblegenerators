@@ -45,7 +45,7 @@ public class SulfurMagmaBlock extends MagmaBlock {
 
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRand) {
-    	if (pRand.nextDouble() <= DIFFUSE_CHANCE) {
+    	if (pRand.nextDouble() < DIFFUSE_CHANCE) {
     		pLevel.setBlockAndUpdate(pBlockPos, Blocks.MAGMA_BLOCK.defaultBlockState());
     	} else {
 	        BlockPos blockpos = pBlockPos.above();
