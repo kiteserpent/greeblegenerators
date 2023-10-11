@@ -71,4 +71,8 @@ public class ModBlocks {
 
     public static final RegistryObject<SulfurBubbleColumnBlock> SULFUR_BUBBLE_COLUMN = registerBlockOnly("sulfur_bubble_column",
             () -> new SulfurBubbleColumnBlock(BlockBehaviour.Properties.of(Material.BUBBLE_COLUMN).noCollission().noDrops()));
+
+    public static final RegistryObject<DeepKelpGenBlock> DEEPKELP_GEN_BLOCK = registerBlock("deepkelp_generator",
+            () -> new DeepKelpGenBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2.5f)), ModCreativeModeTab.GREEBLE_TAB);
+
 }

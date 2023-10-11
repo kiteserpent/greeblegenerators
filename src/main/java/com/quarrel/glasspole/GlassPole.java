@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.quarrel.glasspole.block.ModBlocks;
 import com.quarrel.glasspole.block.entity.ModBlockEntities;
 import com.quarrel.glasspole.item.ModItems;
+import com.quarrel.glasspole.menu.DeepKelpGenScreen;
 import com.quarrel.glasspole.menu.GreebleGenScreen;
 import com.quarrel.glasspole.menu.ModMenuTypes;
 
@@ -65,6 +66,7 @@ public class GlassPole
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.SPARK_CHAMBER_GEN_BLOCK.get(),
 				RenderType.cutout());
         MenuScreens.register(ModMenuTypes.GREEBLE_GENERATOR_MENU.get(), GreebleGenScreen::new);
+        MenuScreens.register(ModMenuTypes.DEEPKELP_GENERATOR_MENU.get(), DeepKelpGenScreen::new);
     }
 
 }

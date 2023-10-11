@@ -13,7 +13,7 @@ public class DriedKelpSlot extends SlotItemHandler {
 
 	@Override
 	public boolean mayPlace(ItemStack stack) {
-		return stack.getItem() == Items.DRIED_KELP || stack.getItem() == Items.DRIED_KELP_BLOCK;
+		return stack.is(Items.DRIED_KELP) || stack.is(Items.DRIED_KELP_BLOCK);
 	}
 
 }

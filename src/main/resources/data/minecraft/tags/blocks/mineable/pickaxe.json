@@ -4,6 +4,7 @@
     "glasspole:static_glass_generator",
 	"glasspole:greeble_generator",
 	"glasspole:spark_chamber_generator",
-	"glasspole:sulfur_magma_block"
+	"glasspole:sulfur_magma_block",
+	"glasspole:deepkelp_generator"
   ]
 }

@@ -18,11 +18,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Random;
 
 import com.mojang.logging.LogUtils;
+import com.quarrel.glasspole.CommonConfigs;
 import com.quarrel.glasspole.GlassPole;
 
 public class SulfurMagmaBlock extends MagmaBlock {
 	
-   public static boolean always(BlockState p_50775_, BlockGetter p_50776_, BlockPos p_50777_) {
+    private static final double DIFFUSE_CHANCE = CommonConfigs.MAGMA_DIFFUSE_CHANCE.get();
+
+    public static boolean always(BlockState p_50775_, BlockGetter p_50776_, BlockPos p_50777_) {
 	      return true;
 	   }
 
@@ -42,7 +45,7 @@ public class SulfurMagmaBlock extends MagmaBlock {
 
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRand) {
-    	if (pRand.nextFloat() < 0.125f) {
+    	if (pRand.nextDouble() <= DIFFUSE_CHANCE) {
     		pLevel.setBlockAndUpdate(pBlockPos, Blocks.MAGMA_BLOCK.defaultBlockState());
     	} else {
 	        BlockPos blockpos = pBlockPos.above();

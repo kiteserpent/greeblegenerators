@@ -7,12 +7,14 @@
 	"item.glasspole.spark_chamber_generator": "Spark Chamber",
 	"item.glasspole.sulfur_magma_block": "Sulfur-Infused Magma",
 	"item.glasspole.sulfurous_infusion": "Sulfurous Infusion",
+	"item.glasspole.deepkelp_generator": "Deep Kelp Generator",
 	
 	"block.glasspole.static_glass_generator": "Static Generator",
 	"block.glasspole.greeble_cage": "Greeble Trap",
 	"block.glasspole.greeble_generator": "Greeble Generator",
 	"block.glasspole.spark_chamber_generator": "Spark Chamber",
 	"block.glasspole.sulfur_magma_block": "Sulfur-Infused Magma",
+	"block.glasspole.deepkelp_generator": "Deep Kelp Generator",
 	
 	"itemGroup.greebletab": "Greeble Generators"
 }
