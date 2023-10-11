@@ -49,9 +49,10 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
     private static final int KELP_BLOCK_BURN_TIME = CommonConfigs.KELP_BLOCK_BURN_TIME.get();
     private static final int KELPGEN_MIN_DEPTH = CommonConfigs.KELPGEN_MIN_DEPTH.get();
     private static final int KELP_SLOT = 0;
-    private int tickCount = 0;
-    private int currentRate = 0;
-    private boolean deepEnough = false;
+    public int tickCount = 0;
+    public int currentRate = 0;
+    public int fullBurnTicks = KELP_BURN_TIME;
+    public boolean deepEnough = false;
     private int depthCheckCounter = 0;
     
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
@@ -104,12 +105,20 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
     protected void saveAdditional(@Nonnull CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
         nbt.put("energy", energyStorage.serializeNBT());
+        CompoundTag infoTag = new CompoundTag();
+        infoTag.putInt("currentRate", currentRate);
+        infoTag.putInt("tickCount", tickCount);
+        infoTag.putInt("fullBurnTicks", fullBurnTicks);
+        nbt.put("Scalars", infoTag);
     }
-
+    
     @Override
     public void load(CompoundTag nbt) {
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
         energyStorage.deserializeNBT(nbt.get("energy"));
+        currentRate = nbt.getCompound("Scalars").getInt("currentRate");
+        tickCount = nbt.getCompound("Scalars").getInt("tickCount");
+        fullBurnTicks = nbt.getCompound("Scalars").getInt("fullBurnTicks");
         super.load(nbt);
     }
 
@@ -135,15 +144,15 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
     }
     
     public void tickServer(Level level, BlockPos pos, BlockState state, DeepKelpGenBlockEntity be) {
-		if (tickCount > 0) {
+		if (tickCount++ < fullBurnTicks) {
 			energyStorage.createEnergy(currentRate);
-			--tickCount;
 		}
 		sendOutPower();
-		if (tickCount <= 0) {
+		if (tickCount >= fullBurnTicks) {
 			checkDepth();
 			currentRate = 0;
-			tickCount = KELP_BURN_TIME;
+			tickCount = 0;
+			fullBurnTicks = KELP_BURN_TIME;
 			ItemStack kelpItem = itemHandler.getStackInSlot(KELP_SLOT);
 			if (kelpItem != null &&
 				energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored() &&
@@ -157,13 +166,13 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
 						currentRate = POWERGEN_MAXGEN;
 				}
 				if (kelpItem.is(Items.DRIED_KELP_BLOCK)) {
-					tickCount = KELP_BLOCK_BURN_TIME;
+					fullBurnTicks = KELP_BLOCK_BURN_TIME;
 		        	itemHandler.extractItem(KELP_SLOT, 1, false);
 		        	setChanged();
 				} else if (kelpItem.is(Items.DRIED_KELP)) { 
 		        	itemHandler.extractItem(KELP_SLOT, 1, false);
 		        	setChanged();
-				} else {	// fallthrough
+				} else {	// failsafe in case illegal fuel got into our input
 					currentRate = 0;
 				}
 			}

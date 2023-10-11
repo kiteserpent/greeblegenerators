@@ -48,6 +48,9 @@ public class DeepKelpGenBlock extends BaseEntityBlock {
     	super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
+/*
+ * Not bothering with re-checking depth on local update.
+ * 
     @SuppressWarnings("deprecation")
 	@Override
     public void neighborChanged(BlockState pNewState, Level pLevel, BlockPos pPos, Block pBlock, BlockPos pPos2, boolean dynamicShape) {
@@ -57,6 +60,7 @@ public class DeepKelpGenBlock extends BaseEntityBlock {
 	    }
         super.neighborChanged(pNewState, pLevel, pPos, pBlock, pPos2, dynamicShape);
     }
+*/
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos,

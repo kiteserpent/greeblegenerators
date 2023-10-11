@@ -31,6 +31,15 @@ public class DeepKelpGenScreen extends AbstractContainerScreen<DeepKelpGenMenu> 
         int y = (height - imageHeight) / 2;
         this.blit(pPoseStack, x, y, 0, 0, imageWidth, imageHeight);
         
+        if (!menu.getDeepEnough()) {
+            this.blit(pPoseStack, x+10, y+23, 215, 23, 41, 38);
+        }
+
+        if (menu.getCurrentRate() > 0) {
+            int flameHeight = (menu.getFullBurnTicks() - menu.getTickCount()) * 16 / menu.getFullBurnTicks();
+            this.blit(pPoseStack, x+97, y+50-flameHeight, 177, 50-flameHeight, 16, flameHeight);
+        }
+
         int energyBarHeight = menu.getEnergy() * 50 / 100000;	// magic numbers bad!
         this.blit(pPoseStack, x+145, y+70-energyBarHeight, 203, 70-energyBarHeight, 12, energyBarHeight);
 

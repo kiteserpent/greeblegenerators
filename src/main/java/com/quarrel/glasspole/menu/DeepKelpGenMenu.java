@@ -20,7 +20,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class DeepKelpGenMenu extends AbstractContainerMenu {
 
-	private final DeepKelpGenBlockEntity ggbe;
+	private final DeepKelpGenBlockEntity dkbe;
 	private final Level level;
 	
 	public DeepKelpGenMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
@@ -30,13 +30,53 @@ public class DeepKelpGenMenu extends AbstractContainerMenu {
 	public DeepKelpGenMenu(int pContainerId, Inventory inv, BlockEntity be) {
 		super(ModMenuTypes.DEEPKELP_GENERATOR_MENU.get(), pContainerId);
 		checkContainerSize(inv, 1);
-		this.ggbe = (DeepKelpGenBlockEntity)be;
+		this.dkbe = (DeepKelpGenBlockEntity)be;
 		this.level = inv.player.level;
-		this.ggbe.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-			addSlot(new DriedKelpSlot(handler, 0, 80, 35));
+		this.dkbe.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+			addSlot(new DriedKelpSlot(handler, 0, 64, 35));
 		});
 		addPlayerInventory(inv);
 		addPlayerHotbar(inv);
+		addDataSlot(new DataSlot() {
+			@Override
+			public int get() {
+				return getDeepEnough() ? 1 : 0;
+			}
+			@Override
+			public void set(int val) {
+				dkbe.deepEnough = ( val == 1 );
+			}
+		});
+		addDataSlot(new DataSlot() {
+			@Override
+			public int get() {
+				return getTickCount();
+			}
+			@Override
+			public void set(int val) {
+				dkbe.tickCount = val;
+			}
+		});
+		addDataSlot(new DataSlot() {
+			@Override
+			public int get() {
+				return getCurrentRate();
+			}
+			@Override
+			public void set(int val) {
+				dkbe.currentRate = val;
+			}
+		});
+		addDataSlot(new DataSlot() {
+			@Override
+			public int get() {
+				return getFullBurnTicks();
+			}
+			@Override
+			public void set(int val) {
+				dkbe.fullBurnTicks = val;
+			}
+		});
 		addDataSlot(new DataSlot() {		// stored energy
 			@Override
 			public int get() {
@@ -44,20 +84,36 @@ public class DeepKelpGenMenu extends AbstractContainerMenu {
 		    }
 			@Override
 			public void set(int val) {
-                ggbe.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
+                dkbe.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
                     ((EnergyStoragePlus)h).setEnergy(val);
                 });
 			}
 		});
 	}
 
+	public boolean getDeepEnough() {
+    	return dkbe.isDeepEnough();
+    }
+
+	public int getTickCount() {
+    	return dkbe.tickCount;
+    }
+
+	public int getCurrentRate() {
+    	return dkbe.currentRate;
+    }
+
+	public int getFullBurnTicks() {
+    	return dkbe.fullBurnTicks;
+    }
+
     public int getEnergy() {
-        return ggbe.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+        return dkbe.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 	
     @Override
     public boolean stillValid(Player pPlayer) {
-        return stillValid(ContainerLevelAccess.create(level, ggbe.getBlockPos()),
+        return stillValid(ContainerLevelAccess.create(level, dkbe.getBlockPos()),
                 pPlayer, ModBlocks.DEEPKELP_GEN_BLOCK.get());
     }
 
