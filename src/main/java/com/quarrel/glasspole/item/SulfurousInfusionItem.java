@@ -20,9 +20,9 @@ public class SulfurousInfusionItem extends Item {
         if (pContext.getLevel().getBlockState(positionClicked).is(Blocks.MAGMA_BLOCK)) {
 	        pContext.getItemInHand().shrink(1);
 	        pContext.getLevel().setBlockAndUpdate(positionClicked, ModBlocks.SULFUR_MAGMA_BLOCK.get().defaultBlockState());
+		    return InteractionResult.SUCCESS;
         }
-
-	    return super.useOn(pContext);
+        return InteractionResult.FAIL;
     }
 
 }

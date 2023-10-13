@@ -2,9 +2,13 @@ package com.quarrel.glasspole.block;
 
 import java.util.Random;
 
+import com.quarrel.glasspole.GlassPole;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -32,9 +36,9 @@ public class SulfurBubbleColumnBlock extends BubbleColumnBlock {
     }
 
     // @Override
-    public static void updateColumn(LevelAccessor pLevel, BlockPos pPos, BlockState pState, BlockState pOtherState) {
+    public static void updateColumn(LevelAccessor pLevel, BlockPos pPos, BlockState pState, BlockState pStateBelow) {
         if (canExistIn(pState)) {
-        	BlockState newOtherState = getColumnState(pOtherState);
+        	BlockState newOtherState = getNewColumnState(pStateBelow);
         	pLevel.setBlock(pPos, newOtherState, UPDATE_CLIENTS);
         	BlockPos.MutableBlockPos blockpos$mutableblockpos = pPos.mutable().move(Direction.UP);
         	while(canExistIn(pLevel.getBlockState(blockpos$mutableblockpos))) {
@@ -53,18 +57,16 @@ public class SulfurBubbleColumnBlock extends BubbleColumnBlock {
      }
 
     // @Override
-    private static BlockState getColumnState(BlockState pState) {
-        if (pState.is(ModBlocks.SULFUR_BUBBLE_COLUMN.get())) {
-           return pState;
-        } else if (pState.is(Blocks.BUBBLE_COLUMN)) {
-            return pState;
-//        	Boolean dd = pState.getValue(DRAG_DOWN);
-//        	return ModBlocks.SULFUR_BUBBLE_COLUMN.get().defaultBlockState().setValue(DRAG_DOWN, Boolean.valueOf(dd));
-        } else if (pState.is(Blocks.SOUL_SAND)) {
+    private static BlockState getNewColumnState(BlockState pStateBelow) {
+        if (pStateBelow.is(ModBlocks.SULFUR_BUBBLE_COLUMN.get())) {
+           return pStateBelow;
+        } else if (pStateBelow.is(Blocks.BUBBLE_COLUMN)) {
+            return pStateBelow;
+        } else if (pStateBelow.is(Blocks.SOUL_SAND)) {
            return Blocks.BUBBLE_COLUMN.defaultBlockState().setValue(DRAG_DOWN, Boolean.valueOf(false));
-        } else if (pState.is(Blocks.MAGMA_BLOCK)) {
+        } else if (pStateBelow.is(Blocks.MAGMA_BLOCK)) {
             return Blocks.BUBBLE_COLUMN.defaultBlockState().setValue(DRAG_DOWN, Boolean.valueOf(true));
-        } else if (pState.is(ModBlocks.SULFUR_MAGMA_BLOCK.get())) {
+        } else if (pStateBelow.is(ModBlocks.SULFUR_MAGMA_BLOCK.get())) {
            return ModBlocks.SULFUR_BUBBLE_COLUMN.get().defaultBlockState().setValue(DRAG_DOWN, Boolean.valueOf(true));
         }
         return Blocks.WATER.defaultBlockState();
@@ -72,20 +74,20 @@ public class SulfurBubbleColumnBlock extends BubbleColumnBlock {
 
     @Override
     public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pOtherState, LevelAccessor pLevel, BlockPos pPos, BlockPos pOtherPos) {
-       pLevel.scheduleTick(pPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
-       if (!pState.canSurvive(pLevel, pPos) || pDirection == Direction.DOWN ||
-    		   (pDirection == Direction.UP && !pOtherState.is(ModBlocks.SULFUR_BUBBLE_COLUMN.get()) && canExistIn(pOtherState))) {
-          pLevel.scheduleTick(pPos, this, CHECK_PERIOD);
-       }
 
-       return super.updateShape(pState, pDirection, pOtherState, pLevel, pPos, pOtherPos);
+    	pLevel.scheduleTick(pPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
+    	if (!pState.canSurvive(pLevel, pPos) || pDirection == Direction.DOWN ||
+    		   (pDirection == Direction.UP && !pOtherState.is(ModBlocks.SULFUR_BUBBLE_COLUMN.get()) && canExistIn(pOtherState))) {
+    		pLevel.scheduleTick(pPos, this, CHECK_PERIOD);
+    	}
+
+    	return super.updateShape(pState, pDirection, pOtherState, pLevel, pPos, pOtherPos);
     }
 
     @Override
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         BlockState stateBelow = pLevel.getBlockState(pPos.below());
-        return stateBelow.is(Blocks.BUBBLE_COLUMN) || stateBelow.is(Blocks.MAGMA_BLOCK) || stateBelow.is(Blocks.SOUL_SAND)
-        		|| stateBelow.is(ModBlocks.SULFUR_BUBBLE_COLUMN.get()) || stateBelow.is(ModBlocks.SULFUR_MAGMA_BLOCK.get());
+        return stateBelow.is(ModBlocks.SULFUR_BUBBLE_COLUMN.get()) || stateBelow.is(ModBlocks.SULFUR_MAGMA_BLOCK.get());
      }
 
     @Override
@@ -97,4 +99,17 @@ public class SulfurBubbleColumnBlock extends BubbleColumnBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
        pBuilder.add(DRAG_DOWN);
     }
+
+/*
+    @Override
+    public void animateTick(BlockState p_50981_, Level p_50982_, BlockPos p_50983_, Random p_50984_) {
+
+        double d0 = (double)p_50983_.getX();
+        double d1 = (double)p_50983_.getY();
+        double d2 = (double)p_50983_.getZ();
+        p_50982_.addAlwaysVisibleParticle(ParticleTypes.SMALL_FLAME, d0 + 0.5D, d1 + 0.8D, d2 + 0.5D, 0.0D, 0.0D, 0.0D);
+ 
+    	super.animateTick(p_50981_, p_50982_, p_50983_, p_50984_);
+	}
+*/
 }

@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BubbleColumnBlock;
@@ -35,24 +36,23 @@ public class SulfurMagmaBlock extends MagmaBlock {
 
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random p_54809_) {
+    	BubbleColumnBlock.updateColumn(pLevel, pBlockPos.above(), pState);
     	SulfurBubbleColumnBlock.updateColumn(pLevel, pBlockPos.above(), pState);
     }
 
     @Override
     public BlockState updateShape(BlockState p_54811_, Direction p_54812_, BlockState p_54813_, LevelAccessor p_54814_, BlockPos p_54815_, BlockPos p_54816_) {
-        return super.updateShape(p_54811_, p_54812_, p_54813_, p_54814_, p_54815_, p_54816_);
+    	return super.updateShape(p_54811_, p_54812_, p_54813_, p_54814_, p_54815_, p_54816_);
     }
 
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pBlockPos, Random pRand) {
-    	if (pRand.nextDouble() < DIFFUSE_CHANCE) {
+        BlockPos posAbove = pBlockPos.above();
+    	if (pRand.nextDouble() < DIFFUSE_CHANCE && pLevel.getBlockState(posAbove).is(ModBlocks.SULFUR_BUBBLE_COLUMN.get())) {
     		pLevel.setBlockAndUpdate(pBlockPos, Blocks.MAGMA_BLOCK.defaultBlockState());
-    	} else {
-	        BlockPos blockpos = pBlockPos.above();
-	        if (pLevel.getFluidState(pBlockPos).is(FluidTags.WATER)) {
+    	} else if (pLevel.getFluidState(pBlockPos).is(FluidTags.WATER)) {
 	           pLevel.playSound((Player)null, pBlockPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
-	           pLevel.sendParticles(ParticleTypes.LARGE_SMOKE, (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.25D, (double)blockpos.getZ() + 0.5D, 8, 0.5D, 0.25D, 0.5D, 0.0D);
-	        }
+	           pLevel.sendParticles(ParticleTypes.LARGE_SMOKE, (double)posAbove.getX() + 0.5D, (double)posAbove.getY() + 0.25D, (double)posAbove.getZ() + 0.5D, 8, 0.5D, 0.25D, 0.5D, 0.0D);
     	}
      }
 }

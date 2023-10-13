@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+        "cBc",
+        "CsC",
+        "cIc"
+    ],
+    "key": {
+        "c": {
+            "item": "minecraft:copper_ingot"
+        },
+        "C": {
+            "item": "minecraft:copper_block"
+        },
+        "B": {
+            "item": "minecraft:blast_furnace"
+        },
+        "s": {
+            "item": "glasspole:sulfurous_infusion"
+        },
+        "I": {
+            "item": "minecraft:iron_bars"
+        }
+    },
+	"result": {
+		"item": "glasspole:deepkelp_generator"
+	}
+}

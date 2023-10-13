@@ -155,15 +155,13 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
 			fullBurnTicks = KELP_BURN_TIME;
 			ItemStack kelpItem = itemHandler.getStackInSlot(KELP_SLOT);
 			if (kelpItem != null &&
-				energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored() &&
-				isDeepEnough()) {
+					energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored() &&
+					isDeepEnough()) {
 				BlockState bsUnder = level.getBlockState(pos.below());
-				BlockState bs2Under = level.getBlockState(pos.below(2));
-				if (bsUnder.is(Blocks.BUBBLE_COLUMN) || bsUnder.is(ModBlocks.SULFUR_BUBBLE_COLUMN.get())) {
-					if (bs2Under.is(Blocks.MAGMA_BLOCK))
-						currentRate = POWERGEN_LOWGEN;
-					else if (bs2Under.is(ModBlocks.SULFUR_MAGMA_BLOCK.get()))
-						currentRate = POWERGEN_MAXGEN;
+				if (bsUnder.is(Blocks.BUBBLE_COLUMN)) {
+					currentRate = POWERGEN_LOWGEN;
+				} else if (bsUnder.is(ModBlocks.SULFUR_BUBBLE_COLUMN.get())) {
+					currentRate = POWERGEN_MAXGEN;
 				}
 				if (kelpItem.is(Items.DRIED_KELP_BLOCK)) {
 					fullBurnTicks = KELP_BLOCK_BURN_TIME;
