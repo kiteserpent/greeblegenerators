@@ -3,7 +3,6 @@ package com.quarrel.glasspole.block.entity;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.quarrel.glasspole.CommonConfigs;
 import com.quarrel.glasspole.EnergyStoragePlus;
@@ -11,15 +10,8 @@ import com.quarrel.glasspole.EnergyStoragePlus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.Containers;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.capabilities.Capability;

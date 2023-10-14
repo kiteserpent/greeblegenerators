@@ -1,8 +1,6 @@
 package com.quarrel.glasspole.block;
 
-import com.quarrel.glasspole.GlassPole;
 import com.quarrel.glasspole.block.entity.SparkChamberGenBlockEntity;
-import com.mojang.logging.LogUtils;
 import java.util.Random;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;

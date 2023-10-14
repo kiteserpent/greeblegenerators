@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 
 import com.quarrel.glasspole.CommonConfigs;
 import com.quarrel.glasspole.EnergyStoragePlus;
-import com.quarrel.glasspole.GlassPole;
 import com.quarrel.glasspole.block.ModBlocks;
 import com.quarrel.glasspole.menu.DeepKelpGenMenu;
 
@@ -30,7 +29,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;

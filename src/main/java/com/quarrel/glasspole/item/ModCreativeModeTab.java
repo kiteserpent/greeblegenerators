@@ -3,7 +3,6 @@ package com.quarrel.glasspole.item;
 import com.quarrel.glasspole.block.ModBlocks;
 
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class ModCreativeModeTab {

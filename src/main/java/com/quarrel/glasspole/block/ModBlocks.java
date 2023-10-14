@@ -6,7 +6,6 @@ import com.quarrel.glasspole.GlassPole;
 import com.quarrel.glasspole.item.ModCreativeModeTab;
 import com.quarrel.glasspole.item.ModItems;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;

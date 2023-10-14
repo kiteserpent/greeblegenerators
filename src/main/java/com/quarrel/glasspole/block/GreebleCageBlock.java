@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.storage.WorldData;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -44,8 +43,9 @@ public class GreebleCageBlock extends Block {
     	return pLevelReader.getBlockState(pBlockPos.below()).is(Blocks.GRASS_BLOCK);
     }
 
-    // copied from CarpetBlock
-    @Override
+    // copied from vanilla CarpetBlock
+    @SuppressWarnings("deprecation")
+	@Override
     public BlockState updateShape(BlockState state, Direction side, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos)
     {
         return !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, side, neighborState, level, pos, neighborPos);
