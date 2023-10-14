@@ -5,7 +5,9 @@ import com.quarrel.glasspole.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
 public class SulfurousInfusionItem extends Item {
@@ -25,4 +27,13 @@ public class SulfurousInfusionItem extends Item {
         return InteractionResult.FAIL;
     }
 
+    public static boolean dispenseOn(ItemStack pItemStack, Level pLevel, BlockPos pBlockPos) {
+    	if (!(pLevel instanceof net.minecraft.server.level.ServerLevel))
+    		return false;
+    	if (!(pLevel.getBlockState(pBlockPos).is(Blocks.MAGMA_BLOCK)))
+    		return false;
+		pItemStack.shrink(1);
+        pLevel.setBlockAndUpdate(pBlockPos, ModBlocks.SULFUR_MAGMA_BLOCK.get().defaultBlockState());
+        return true;
+    }
 }

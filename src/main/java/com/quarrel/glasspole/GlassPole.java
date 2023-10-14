@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.quarrel.glasspole.block.ModBlocks;
 import com.quarrel.glasspole.block.entity.ModBlockEntities;
 import com.quarrel.glasspole.item.ModItems;
+import com.quarrel.glasspole.item.SulfurousInfusionItem;
 import com.quarrel.glasspole.menu.DeepKelpGenScreen;
 import com.quarrel.glasspole.menu.GreebleGenScreen;
 import com.quarrel.glasspole.menu.ModMenuTypes;
@@ -11,7 +12,16 @@ import com.quarrel.glasspole.menu.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
+import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -46,15 +56,26 @@ public class GlassPole
     	eventBus.addListener(this::clientSetup);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfigs.SPEC, "greeblegens-common.toml");
-        
+
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-    }
 
+    }
+        
     private void setup(final FMLCommonSetupEvent event)
     {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
+        DispenserBlock.registerBehavior(ModItems.SULFUROUS_INFUSION_ITEM.get(),
+        		new OptionalDispenseItemBehavior() {
+            protected ItemStack execute(BlockSource pBlockSource, ItemStack pItemStack) {
+               this.setSuccess(true);
+               Level level = pBlockSource.getLevel();
+               BlockPos blockpos = pBlockSource.getPos().relative(pBlockSource.getBlockState().getValue(DispenserBlock.FACING));
+               if (!SulfurousInfusionItem.dispenseOn(pItemStack, level, blockpos)) {
+                  this.setSuccess(false);
+               }
+               return pItemStack;
+            }
+         });
     }
 
     private void clientSetup(final FMLClientSetupEvent event)
