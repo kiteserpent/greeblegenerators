@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss"
+  ],
+  "key": {
+    "s": [
+		{
+		  "tag": "forge:dusts/sulfur"
+		},
+		{
+		  "tag": "forge:gems/sulfur"
+		}
+	]
+  },
+  "result": {
+    "item": "greeblegenerators:sulfurous_infusion",
+	"count": 3
+  }
+}

@@ -1,0 +1,20 @@
+{
+	"item.greeblegenerators.static_glass_generator": "Static Generator",
+	"item.greeblegenerators.greeble_cage": "Greeble Trap",
+	"item.greeblegenerators.caged_greeble": "Caged Greeble",
+	"item.greeblegenerators.greeble_generator": "Greeble Generator",
+	"item.greeblegenerators.excitation_frame": "Excitation Frame",
+	"item.greeblegenerators.spark_chamber_generator": "Spark Chamber",
+	"item.greeblegenerators.sulfur_magma_block": "Sulfur-Infused Magma",
+	"item.greeblegenerators.sulfurous_infusion": "Sulfurous Infusion",
+	"item.greeblegenerators.deepkelp_generator": "Deep Kelp Generator",
+	
+	"block.greeblegenerators.static_glass_generator": "Static Generator",
+	"block.greeblegenerators.greeble_cage": "Greeble Trap",
+	"block.greeblegenerators.greeble_generator": "Greeble Generator",
+	"block.greeblegenerators.spark_chamber_generator": "Spark Chamber",
+	"block.greeblegenerators.sulfur_magma_block": "Sulfur-Infused Magma",
+	"block.greeblegenerators.deepkelp_generator": "Deep Kelp Generator",
+	
+	"itemGroup.greebletab": "Greeble Generators"
+}

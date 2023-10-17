@@ -19,9 +19,9 @@ apply plugin: 'net.minecraftforge.gradle'
 // apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 
-version = '0.1.0'
-group = 'com.quarrel.glasspole' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'glasspole'
+version = '0.9.0'
+group = 'net.quarrel.greeblegenerators' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'greeblegenerators'
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -64,10 +64,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'glasspole'
+            property 'forge.enabledGameTestNamespaces', 'greeblegenerators'
 
             mods {
-                glasspole {
+                greeblegenerators {
                     source sourceSets.main
                 }
             }
@@ -81,10 +81,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'glasspole'
+            property 'forge.enabledGameTestNamespaces', 'greeblegenerators'
 
             mods {
-                glasspole {
+                greeblegenerators {
                     source sourceSets.main
                 }
             }
@@ -109,10 +109,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'glasspole'
+            property 'forge.enabledGameTestNamespaces', 'greeblegenerators'
 
             mods {
-                glasspole {
+                greeblegenerators {
                     source sourceSets.main
                 }
             }
@@ -126,10 +126,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'glasspole', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'greeblegenerators', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                glasspole {
+                greeblegenerators {
                     source sourceSets.main
                 }
             }
@@ -179,12 +179,12 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "glasspole",
-                "Specification-Vendor"    : "glasspolesareus",
+                "Specification-Title"     : "greeblegenerators",
+                "Specification-Vendor"    : "kiteserpent",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "glasspolesareus",
+                "Implementation-Vendor"   : "kiteserpent",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

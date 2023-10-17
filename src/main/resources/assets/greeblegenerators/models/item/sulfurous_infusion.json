@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "greeblegenerators:item/sulfurous_infusion"
+  }
+}

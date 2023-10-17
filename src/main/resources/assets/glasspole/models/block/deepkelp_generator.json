@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "top": "glasspole:block/deepkelp_gen_top",
-    "bottom": "glasspole:block/deepkelp_gen_bottom",
-    "side": "glasspole:block/deepkelp_gen_side"
-  }
-}

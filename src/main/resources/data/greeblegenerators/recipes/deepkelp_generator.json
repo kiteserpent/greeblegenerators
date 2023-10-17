@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+        "cBc",
+        "isi",
+        "cIc"
+    ],
+    "key": {
+        "c": {
+            "item": "minecraft:copper_ingot"
+        },
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "B": {
+            "item": "minecraft:blast_furnace"
+        },
+        "s": {
+            "item": "greeblegenerators:sulfurous_infusion"
+        },
+        "I": {
+            "item": "minecraft:iron_bars"
+        }
+    },
+	"result": {
+		"item": "greeblegenerators:deepkelp_generator"
+	}
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "greeblegenerators:block/greeble_gen_top",
+    "bottom": "greeblegenerators:block/greeble_gen_bottom",
+    "side": "greeblegenerators:block/greeble_gen_side"
+  }
+}

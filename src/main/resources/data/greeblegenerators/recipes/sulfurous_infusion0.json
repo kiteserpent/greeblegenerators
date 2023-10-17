@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "g g",
+    "ggg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "item": "greeblegenerators:sulfurous_infusion"
+  }
+}

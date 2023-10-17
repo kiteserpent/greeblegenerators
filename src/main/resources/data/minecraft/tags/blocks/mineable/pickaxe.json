@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "glasspole:static_glass_generator",
-	"glasspole:greeble_generator",
-	"glasspole:spark_chamber_generator",
-	"glasspole:sulfur_magma_block",
-	"glasspole:deepkelp_generator"
+    "greeblegenerators:static_glass_generator",
+	"greeblegenerators:greeble_generator",
+	"greeblegenerators:spark_chamber_generator",
+	"greeblegenerators:sulfur_magma_block",
+	"greeblegenerators:deepkelp_generator"
   ]
 }

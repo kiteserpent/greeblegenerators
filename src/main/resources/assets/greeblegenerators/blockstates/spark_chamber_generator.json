@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"sparking=false": {
+		  "model": "greeblegenerators:block/spark_chamber_generator"
+		},
+		"sparking=true": {
+		  "model": "greeblegenerators:block/spark_chamber_sparking"
+		}
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"full=false": {
+		  "model": "greeblegenerators:block/greeble_cage_empty"
+		},
+		"full=true": {
+		  "model": "greeblegenerators:block/caged_greeble"
+		}
+	}
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "/G/",
+    "SSS"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:iron_bars"
+    },
+    "/": {
+      "item": "minecraft:lightning_rod"
+    },
+    "G": {
+      "item": "greeblegenerators:caged_greeble"
+    },
+    "S": {
+      "item": "minecraft:stone_slab"
+    }
+  },
+  "result": {
+    "item": "greeblegenerators:greeble_generator"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sbs"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "b": [
+		{
+		  "item": "minecraft:sweet_berries"
+		},
+		{
+		  "item": "minecraft:glow_berries"
+		}
+	]
+  },
+  "result": {
+    "item": "greeblegenerators:greeble_cage"
+  }
+}

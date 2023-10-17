@@ -1,0 +1,5 @@
+{
+	"variants": {
+		"": { "model": "greeblegenerators:block/static_glass_generator" }
+	}
+}

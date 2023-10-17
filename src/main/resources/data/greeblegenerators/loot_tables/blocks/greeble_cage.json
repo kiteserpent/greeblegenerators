@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "greeblegenerators:greeble_cage",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "greeblegenerators:greeble_cage",
+              "properties": {
+				"full": "false"
+              }
+            }
+          ]
+        },
+        {
+		  "type": "minecraft:item",
+		  "name": "greeblegenerators:caged_greeble",
+		  "conditions": [
+			{
+			  "condition": "minecraft:block_state_property",
+			  "block": "greeblegenerators:greeble_cage",
+			  "properties": {
+				"full": "true"
+			  }
+			}
+		  ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}

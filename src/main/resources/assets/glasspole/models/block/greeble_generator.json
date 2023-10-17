@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "top": "glasspole:block/greeble_gen_top",
-    "bottom": "glasspole:block/greeble_gen_bottom",
-    "side": "glasspole:block/greeble_gen_side"
-  }
-}
