@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.quarrel.glasspole.GlassPole;
+import com.quarrel.glasspole.block.entity.DeepKelpGenBlockEntity;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -35,7 +36,7 @@ public class DeepKelpGenScreen extends AbstractContainerScreen<DeepKelpGenMenu> 
             this.blit(pPoseStack, x+10, y+23, 215, 23, 41, 38);
         }
 
-        if (menu.getCurrentRate() > 0) {
+        if (menu.getFullBurnTicks() > DeepKelpGenBlockEntity.QUICK_DELAY) {
             int flameHeight = (menu.getFullBurnTicks() - menu.getTickCount()) * 16 / menu.getFullBurnTicks();
             this.blit(pPoseStack, x+97, y+50-flameHeight, 177, 50-flameHeight, 16, flameHeight);
         }

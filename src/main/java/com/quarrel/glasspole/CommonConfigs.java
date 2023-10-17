@@ -25,8 +25,8 @@ public class CommonConfigs {
         MAGMA_DIFFUSE_CHANCE =  BUILDER.comment("Chance of sulfur-infused magma reverting on a random tick").defineInRange("Sulfur-Infused Magma revert chance", 0.55, 0.0, 1.0);
         DEEPKELP_GEN_RATE =  BUILDER.comment("FE/t produced by a Deep Kelp Generator over sulfur-infused magma").defineInRange("Deep Kelp FE/t w/infused magma", 100, 1, 50000);
         DEEPKELP_LOW_GEN_RATE =  BUILDER.comment("FE/t produced by a Deep Kelp Generator over normal magma").defineInRange("Deep Kelp FE/t w/normal magma", 25, 1, 50000);
-        KELP_BURN_TIME =  BUILDER.comment("Production time for one piece of dried kelp").defineInRange("Dried Kelp power duration (ticks)", 500, 2, 100000);
-        KELP_BLOCK_BURN_TIME =  BUILDER.comment("Production time for one block of dried kelp").defineInRange("Dried Kelp Block power duration (ticks)", 5000, 2, 100000);
+        KELP_BURN_TIME =  BUILDER.comment("Production time for one piece of dried kelp").defineInRange("Dried Kelp power duration (ticks)", 500, 20, 100000);
+        KELP_BLOCK_BURN_TIME =  BUILDER.comment("Production time for one block of dried kelp").defineInRange("Dried Kelp Block power duration (ticks)", 5000, 20, 100000);
         KELPGEN_MIN_DEPTH =  BUILDER.comment("Minimum depth for a Keep Kelp Generator to operate").defineInRange("Depth", 20, 1, 500);
         BUILDER.pop();
         SPEC = BUILDER.build();

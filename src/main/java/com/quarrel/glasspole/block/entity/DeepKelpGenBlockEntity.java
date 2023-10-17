@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.quarrel.glasspole.CommonConfigs;
 import com.quarrel.glasspole.EnergyStoragePlus;
+import com.quarrel.glasspole.GlassPole;
 import com.quarrel.glasspole.block.ModBlocks;
 import com.quarrel.glasspole.menu.DeepKelpGenMenu;
 
@@ -43,15 +44,17 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
     private static final int POWERGEN_MAXGEN = CommonConfigs.DEEPKELP_GEN_RATE.get();
     private static final int POWERGEN_LOWGEN = CommonConfigs.DEEPKELP_LOW_GEN_RATE.get();
     private static final int POWERGEN_SEND = 2 * POWERGEN_MAXGEN;
+    public  static final int QUICK_DELAY = 10;
     private static final int KELP_BURN_TIME = CommonConfigs.KELP_BURN_TIME.get();
     private static final int KELP_BLOCK_BURN_TIME = CommonConfigs.KELP_BLOCK_BURN_TIME.get();
     private static final int KELPGEN_MIN_DEPTH = CommonConfigs.KELPGEN_MIN_DEPTH.get();
     private static final int KELP_SLOT = 0;
     public int tickCount = 0;
     public int currentRate = 0;
-    public int fullBurnTicks = KELP_BURN_TIME;
+    public int fullBurnTicks = QUICK_DELAY;
     public boolean deepEnough = false;
-    private int depthCheckCounter = 0;
+    private int depthCheckCounter = 999;
+    private boolean isSituated = false;
     
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
     	@Override
@@ -129,7 +132,8 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
     }
 
     public void checkDepth() {
-    	if ((depthCheckCounter++ % 20) == 0) {	// don't spam this check
+    	if (depthCheckCounter++ > 9) {	// actually run this check only every 10th call
+    		depthCheckCounter = 0;
             int depth = 0;
             for (BlockPos pos = this.getBlockPos().above();
             		// this.level.getBlockState(pos).is(Blocks.WATER);
@@ -142,63 +146,82 @@ public class DeepKelpGenBlockEntity extends BlockEntity implements MenuProvider 
     }
     
     public void tickServer(Level level, BlockPos pos, BlockState state, DeepKelpGenBlockEntity be) {
-		if (tickCount++ < fullBurnTicks) {
+    	// produce current power and tick up
+    	// if at a bubble check interval, check
+    	// if at a depth check interval, check
+    	// if out of fuel, refuel
+    	if (currentRate > 0) {
 			energyStorage.createEnergy(currentRate);
 		}
 		sendOutPower();
-		if (tickCount >= fullBurnTicks) {
-			checkDepth();
+		if (tickCount++ % QUICK_DELAY == 0) {
 			currentRate = 0;
-			tickCount = 0;
-			fullBurnTicks = KELP_BURN_TIME;
-			ItemStack kelpItem = itemHandler.getStackInSlot(KELP_SLOT);
-			if (kelpItem != null &&
-					energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored() &&
-					isDeepEnough()) {
+			isSituated = false;
+			checkDepth();
+			if (isDeepEnough()) {
 				BlockState bsUnder = level.getBlockState(pos.below());
 				if (bsUnder.is(Blocks.BUBBLE_COLUMN)) {
 					currentRate = POWERGEN_LOWGEN;
+					isSituated = true;
 				} else if (bsUnder.is(ModBlocks.SULFUR_BUBBLE_COLUMN.get())) {
 					currentRate = POWERGEN_MAXGEN;
+					isSituated = true;
 				}
+			}
+		}
+
+		if (tickCount >= fullBurnTicks) {
+			tickCount = 0;
+			ItemStack kelpItem = itemHandler.getStackInSlot(KELP_SLOT);
+			if (kelpItem.isEmpty() ||
+					(energyStorage.getEnergyStored() == energyStorage.getMaxEnergyStored()) ||
+					!isSituated) {
+				currentRate = 0;
+				fullBurnTicks = QUICK_DELAY;
+			} else {
 				if (kelpItem.is(Items.DRIED_KELP_BLOCK)) {
 					fullBurnTicks = KELP_BLOCK_BURN_TIME;
 		        	itemHandler.extractItem(KELP_SLOT, 1, false);
 		        	setChanged();
 				} else if (kelpItem.is(Items.DRIED_KELP)) { 
+					fullBurnTicks = KELP_BURN_TIME;
 		        	itemHandler.extractItem(KELP_SLOT, 1, false);
 		        	setChanged();
 				} else {	// failsafe in case illegal fuel got into our input
 					currentRate = 0;
+					fullBurnTicks = QUICK_DELAY;
 				}
 			}
+		}
+		if (fullBurnTicks == QUICK_DELAY) {
+			currentRate = 0;
 		}
 	}
 
     private void sendOutPower() {
         AtomicInteger stored = new AtomicInteger(energyStorage.getEnergyStored());
-        if (stored.get() > 0) {
-            for (Direction direction : Direction.values()) {
-                BlockEntity otherBE = this.level.getBlockEntity(this.worldPosition.relative(direction));
-                if (otherBE == null) {
-                    continue;
-                }
-                otherBE.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
-                    if (otherStorage.canReceive()) {
-                        int canSend = Math.min(stored.get(), DeepKelpGenBlockEntity.POWERGEN_SEND);
-                        int didSend = otherStorage.receiveEnergy(canSend, false);
-                        energyStorage.extractEnergy(didSend, false);
-                        if (didSend > 0) {
-                        	stored.addAndGet(-didSend);
-                        	setChanged();
-                        }
+        if (stored.get() == 0)
+        	return;
+        for (Direction direction : Direction.values()) {
+            BlockEntity otherBE = this.level.getBlockEntity(this.worldPosition.relative(direction));
+            if (otherBE == null) {
+                continue;
+            }
+            otherBE.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(otherStorage -> {
+                if (otherStorage.canReceive()) {
+                    int canSend = Math.min(stored.get(), DeepKelpGenBlockEntity.POWERGEN_SEND);
+                    int didSend = otherStorage.receiveEnergy(canSend, false);
+                    energyStorage.extractEnergy(didSend, false);
+                    if (didSend > 0) {
+                    	stored.addAndGet(-didSend);
+                    	setChanged();
                     }
-                });
-            	if (stored.get() <= 0) {
-            		break;
-            	}
+                }
+            });
+        	if (stored.get() <= 0) {
+        		break;
         	}
-        }
+    	}
     }
 
 	public boolean isDeepEnough() {
